@@ -1,0 +1,64 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+
+* {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+}
+
+body {
+}
+
+.main-blue-color {
+    color: #0a68ff;
+}
+
+.bg-main-blue {
+    background-color: #0a68ff;
+}
+
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+    color: #0a68ff !important;
+    font-weight: bold;
+}
+
+.bg-content-body {
+    background-color: #f5f5fa;
+}
+
+.navbar-nav .nav-link {
+    padding: 8px 16px !important;
+    border-radius: 8px;
+    margin-inline: 2px;
+    text-align: center;
+}
+
+
+
+    .navbar-nav .nav-link.active:hover {
+        background-color: rgba(0, 96, 255, 0.12);
+    }
+
+
+.main-title {
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+}
+
+.cate-title {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+}
+
+.cate-item {
+    padding-block: 4px;
+}
+
+.main-hover:hover {
+    background-color: rgba(39, 39, 42, 0.12);
+    cursor: pointer;
+    border-radius: 8px;
+}

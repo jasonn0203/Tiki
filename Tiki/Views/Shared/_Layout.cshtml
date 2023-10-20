@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiki</title>
+    <link rel="icon" type="image/x-icon" href="~/Assets/tiki_logo.png">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg bg-white pt-4 pb-2">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="~/Assets/tiki_logo.png" width="72" height="72" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#appNavbar" aria-controls="appNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="appNavbar">
+
+
+                <div class="input-group flex-column-reverse " style="width: 60%;">
+                    <form class=" form-outline flex-fill">
+                        <div class="d-flex gap-2">
+                            <input type="search" id="searchForm" class="form-control form-control-lg " style="font-size:14px" placeholder="Tìm kiếm sản phẩm ..." />
+                            <button type="submit" class="btn btn-primary bg-main-blue " style="width: 15%">
+                                Tìm kiếm
+                            </button>
+                        </div>
+                    </form>
+                    <div class="form-helper mb-2">
+                        <span class="font-weight-bold">Gợi ý:</span>
+                        <a href="#!" class="text-black-50">Sách,</a>
+                        <a href="#!" class="text-black-50">iphone 15,</a>
+                        <a href="#!" class="text-black-50">bình nước,</a>
+                        <a href="#!" class="text-black-50">bàn chải,</a>
+
+                    </div>
+
+                </div>
+
+
+
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active main-hover" aria-current="page" href="#">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link main-hover" href="#">Astra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link main-hover" href="#">Tài khoản</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+
+
+    </nav>
+    <hr class="m-0" />
+
+
+
+
+    <div class="container-fluid bg-content-body">
+        <div class="container">
+            @RenderBody()
+        </div>
+
+    </div>
+
+
+    <!--FOOTER -->
+    <div class="container-fluid p-0">
+        <!-- Footer -->
+        <footer class="text-center text-lg-start text-white bg-main-blue">
+            <!-- Grid container -->
+            <div class="container p-4">
+                <!-- Section: Links -->
+                <section class="">
+                    <!--Grid row-->
+                    <div class="row">
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <img src="~/Assets/tiki_logo.png" width="72" height="72" />
+                            <p class="mt-2">
+                                Trụ sở chính: Tòa nhà Viettel, Số 285, đường Cách Mạng Tháng 8, phường 12, quận 10, Thành phố Hồ Chí Minh <br />
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">Hỗ Trợ Khách Hàng</h6>
+                            <p>
+                                <a class="text-white" href="#">Các câu hỏi thường gặp</a>
+                            </p>
+                            <p>
+                                <a class="text-white" href="#">Hướng dẫn đặt hàng</a>
+                            </p>
+                            <p>
+                                <a class="text-white" href="#">Chính sách trả hàng</a>
+                            </p>
+                            <p>
+                                <a class="text-white" href="#">Phương thức vận chuyển</a>
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">Liên hệ</h6>
+                            <p><i class="fas fa-home mr-3"></i> HUFLIT </p>
+                            <p><i class="fas fa-envelope mr-3"></i> jasonn0203@gmail.com</p>
+
+                        </div>
+                        <!-- Grid column -->
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">Tải ứng dụng tại:</h6>
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="~/Assets/qr_app.png" width="80" height="80" />
+                                <div class="d-flex flex-column gap-1">
+                                    <img src="~/Assets/app-appstore.png" width="100" height="36" />
+                                    <img src="~/Assets/app-chplay.png" width="100" height="36" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--Grid row-->
+                </section>
+                <!-- Section: Links -->
+            </div>
+            <!-- Grid container -->
+            <!-- Copyright -->
+            <div class="text-center p-3"
+                 style="background-color: rgba(0, 0, 0, 0.2)">
+                © 2023 Copyright:
+                <a class="text-white" href="https://mdbootstrap.com/">Huỳnh Nhật Quân ft. Nguyễn Hữu Thành</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+    </div>
+    <!-- End of .container -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
+
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>
