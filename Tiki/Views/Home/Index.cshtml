@@ -1,44 +1,108 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<link />
+<link rel="stylesheet" href="~/Content/home.css" />
+
 
 
 
 <div class="d-flex flex-column flex-md-row py-4 justify-content-between gap-2 my-2 my-md-0">
 
-    <div class="col-md-2 bg-white rounded-4 p-4">
+    <div class="col-md-2 bg-white rounded-4 p-4 " style="height:fit-content;">
         <p class="main-title">Danh Mục</p>
 
         <div class="row">
             <div class="col-md-12 col-4 mb-4 cate-item main-hover">
                 <img class="rounded-2" src="~/Assets/qr_app.png" width="32" height="32" />
-                <span class="cate-title">Đồ chơi</span>
+                <span class="tiki-title">Đồ chơi</span>
             </div>
             <div class="col-md-12 col-4 mb-4 cate-item main-hover">
                 <img class="rounded-2" src="~/Assets/qr_app.png" width="32" height="32" />
-                <span class="cate-title">Đồ chơi</span>
+                <span class="tiki-title">Đồ chơi</span>
             </div>
             <div class="col-md-12 col-4 mb-4 cate-item main-hover">
                 <img class="rounded-2" src="~/Assets/qr_app.png" width="32" height="32" />
-                <span class="cate-title">Đồ chơi</span>
+                <span class="tiki-title">Đồ chơi</span>
             </div>
             <div class="col-md-12 col-4 mb-4 cate-item main-hover">
                 <img class="rounded-2" src="~/Assets/qr_app.png" width="32" height="32" />
-                <span class="cate-title">Đồ chơi</span>
+                <span class="tiki-title">Đồ chơi</span>
             </div>
 
         </div>
     </div>
 
-    <div class="col-md-10 bg-white rounded-4  p-4">
-        @*BANNER*@
+    <div class="col-md-10overflow-x-hidden">
+        <div class="d-flex flex-column gap-4">
+            @*BANNER*@
+            <div class="d-flex flex-column flex-md-row gap-2 bg-white   rounded-4  p-4 ">
+                <img class="rounded-4 h-auto ratio-1x1 object-fit-cover w-50 mx-auto" src="~/Assets/vinamilk_banner.png" />
 
-        <div class="d-flex flex-column flex-md-row gap-2">
-            <img class="rounded-4 h-auto ratio-1x1 object-fit-cover w-50" src="~/Assets/vinamilk_banner.png" />
+                <img class="rounded-4 h-auto ratio-1x1 object-fit-cover w-50 mx-auto" src="~/Assets/ad-banner2.png" />
 
+            </div>
+
+            <div class="d-flex flex-column gap-2 bg-white   rounded-4  p-4 ">
+                <p class="main-title">Sản phẩm bạn có thể quan tâm</p>
+
+                @*Carousel*@
+                <div id="horizontal-card-carousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="card-group card-group-scroll">
+                                <!-- Add your card items here -->
+
+                                <div class="card overflow-hidden rounded-2">
+                                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/b0/f7/91/8e1581fb2d7321c71b3b9b14409a943b.jpg.webp" class="card-img-carousel overflow-hidden" />
+                                    <div class="card-body">
+
+                                        <p class="card-text truncate-2 tiki-title">
+                                            Tai nghe KZ Z1 PRO Bluetooth 5.2 TWS  không dây năng động Điều khiển cảm ứng và chống nước
+                                        </p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">383.000</small> <sup>₫</sup>
+                                    </div>
+                                </div>
+
+                                <div class="card overflow-hidden rounded-2">
+                                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/b0/f7/91/8e1581fb2d7321c71b3b9b14409a943b.jpg.webp" class="card-img-carousel " />
+                                    <div class="card-body">
+
+                                        <p class="card-text truncate-2 tiki-title">
+                                            Tai nghe KZ Z1 PRO Bluetooth 5.2 TWS  không dây năng động Điều khiển cảm ứng và chống nước
+                                        </p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">383.000</small> <sup>₫</sup>
+                                    </div>
+                                </div>
+
+                                <div class="card overflow-hidden rounded-2">
+                                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/b0/f7/91/8e1581fb2d7321c71b3b9b14409a943b.jpg.webp" class="card-img-carousel overflow-hidden" />
+                                    <div class="card-body">
+
+                                        <p class="card-text truncate-2 tiki-title">
+                                            Tai nghe KZ Z1 PRO Bluetooth 5.2 TWS  không dây năng động Điều khiển cảm ứng và chống nước
+                                        </p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">383.000</small> <sup>₫</sup>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                 
+                    </div>
+
+                </div>
+
+
+            </div>
 
         </div>
+
 
 
     </div>

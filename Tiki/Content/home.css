@@ -1,1 +1,8 @@
-﻿
+﻿.biggy{
+    font-size: 64px;
+}
+
+.card{
+    max-width: 180px;
+
+}
