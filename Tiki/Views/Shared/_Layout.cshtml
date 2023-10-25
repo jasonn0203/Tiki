@@ -24,8 +24,8 @@
                     <form class=" form-outline flex-fill">
                         <div class="d-flex gap-2">
                             <input type="search" id="searchForm" class="form-control form-control-lg " style="font-size:14px" placeholder="Tìm kiếm sản phẩm ..." />
-                            <button type="submit" class="btn btn-primary bg-main-blue " style="width: 15%">
-                                Tìm kiếm
+                            <button type="submit" class="btn btn-primary bg-main-blue ">
+                                <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </div>
                     </form>
@@ -66,7 +66,7 @@
                             Tài khoản
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Đăng ký tài khoản</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("SignUp","User")">Đăng ký tài khoản</a></li>
                             <li><a class="dropdown-item" href="#">Đăng nhập tài khoản</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Tiki</a></li>
@@ -86,7 +86,7 @@
 
 
     <div class="container-fluid bg-content-body">
-        <div class="container">
+        <div class="container py-md-4 py-2">
             @RenderBody()
         </div>
 

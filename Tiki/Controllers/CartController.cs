@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace Tiki.Controllers
 {
-    public class DetailController : Controller
+    public class CartController : Controller
     {
-        // GET: Detail
-        public ActionResult ProductDetail()
+        // GET: Cart
+        public ActionResult Checkout()
         {
             return View();
         }

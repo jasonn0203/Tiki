@@ -6,25 +6,20 @@ using System.Web.Mvc;
 
 namespace Tiki.Controllers
 {
-    public class UserController : Controller
+    public class SellerController : Controller
     {
-        // GET: User
-        public ActionResult SignUp()
+        // GET: Seller
+        public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult SignIn()
+        public ActionResult SellerSignUp()
         {
             return View();
         }
 
-        public ActionResult Invoices()
-        {
-            return View();
-        }
-
-        public ActionResult Orders()
+        public ActionResult SellerSignIn()
         {
             return View();
         }

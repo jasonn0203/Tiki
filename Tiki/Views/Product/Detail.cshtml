@@ -5,7 +5,7 @@
 }
 
 <div class="d-flex flex-column gap-2">
-    <div class="row py-4 my-2 ">
+    <div class="row py-2">
 
         <div class="col-md-10 col-12">
 
@@ -190,14 +190,34 @@
         <div class="col-md-2 col-12 bg-white p-3 rounded-4
              " style="height: fit-content;">
             <p>Số lượng</p>
-            <div class="input-group my-2">
-                <span class="input-group-btn">
-                    <button class="btn btn-danger" id="decrement">-</button>
-                </span>
-                <input type="text" class="form-control mx-2 rounded-pill text-center" readonly id="quantity" value="1">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" id="increment">+</button>
-                </span>
+            <div class="input-group my-2 flex-nowrap justify-content-center">
+                @*  <span class="input-group-btn">
+                        <button class="btn btn-danger" id="decrement" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                    </span>
+                    <input type="number" class="form-control " readonly id="quantity" value="1">
+                    <div class="form-outline">
+                        <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control" />
+
+                    </div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" id="increment" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                    </span>*@
+
+
+                <button class="btn btn-primary me-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                    <i class="fas fa-minus"></i>
+                </button>
+
+                <div class="form-outline">
+                    <input id="form1" min="0" name="quantity" value="1" readonly type="number" class="form-control text-center" />
+
+                </div>
+
+                <button class="btn btn-primary ms-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                    <i class="fas fa-plus"></i>
+                </button>
             </div>
 
             <div class="my-4">
@@ -216,27 +236,27 @@
 
 
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const quantityInput = document.getElementById("quantity");
-        const incrementButton = document.getElementById("increment");
-        const decrementButton = document.getElementById("decrement");
+@*<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const quantityInput = document.getElementById("quantity");
+            const incrementButton = document.getElementById("increment");
+            const decrementButton = document.getElementById("decrement");
 
-        incrementButton.addEventListener("click", function () {
-            let currentQuantity = parseInt(quantityInput.value);
-            if (!isNaN(currentQuantity)) {
-                if (currentQuantity < 10) {
-                    currentQuantity++;
+            incrementButton.addEventListener("click", function () {
+                let currentQuantity = parseInt(quantityInput.value);
+                if (!isNaN(currentQuantity)) {
+                    if (currentQuantity < 10) {
+                        currentQuantity++;
+                    }
+                    quantityInput.value = currentQuantity;
                 }
-                quantityInput.value = currentQuantity;
-            }
-        });
+            });
 
-        decrementButton.addEventListener("click", function () {
-            const currentQuantity = parseInt(quantityInput.value);
-            if (!isNaN(currentQuantity) && currentQuantity > 1) {
-                quantityInput.value = currentQuantity - 1;
-            }
+            decrementButton.addEventListener("click", function () {
+                const currentQuantity = parseInt(quantityInput.value);
+                if (!isNaN(currentQuantity) && currentQuantity > 1) {
+                    quantityInput.value = currentQuantity - 1;
+                }
+            });
         });
-    });
-</script>
+    </script>*@
