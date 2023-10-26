@@ -134,10 +134,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin.css" />
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\animsition.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
     <Content Include="Content\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\bootstrap-progressbar.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-reboot.rtl.css" />
@@ -150,6 +154,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\hamburger.css" />
     <Content Include="Content\home.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -174,6 +179,8 @@
     <None Include=".dockerignore">
       <DependentUpon>Dockerfile</DependentUpon>
     </None>
+    <Content Include="Scripts\Admin\animsition.min.js" />
+    <Content Include="Scripts\Admin\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -217,6 +224,9 @@
     <Content Include="Views\Cart\Checkout.cshtml" />
     <Content Include="Views\User\Invoices.cshtml" />
     <Content Include="Views\User\Orders.cshtml" />
+    <Content Include="Views\Shared\_SellerLayout.cshtml" />
+    <Content Include="Views\Seller\Dashboard.cshtml" />
+    <Content Include="Views\Seller\Management.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

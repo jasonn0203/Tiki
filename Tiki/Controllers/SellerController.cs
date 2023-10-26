@@ -9,8 +9,16 @@ namespace Tiki.Controllers
     public class SellerController : Controller
     {
         // GET: Seller
-        public ActionResult Index()
+        public ActionResult Dashboard()
         {
+            ViewBag.Tab = "Dashboard";
+            return View();
+        }
+
+        public ActionResult Management()
+        {
+            ViewBag.Tab = "Management";
+
             return View();
         }
 
