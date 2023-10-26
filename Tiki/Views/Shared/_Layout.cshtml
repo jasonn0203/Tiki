@@ -53,8 +53,8 @@
                     </li>
 
                     <li class="nav-item">
-                      
-                        <a href="#" class=" nav-link main-hover btn btn-primary">
+
+                        <a href="@Url.Action("Checkout","Cart")" class=" nav-link main-hover btn btn-primary">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="badge bg-main-blue">3</span> <!-- Quantity indicator -->
                         </a>
@@ -62,15 +62,27 @@
 
                     <!-- Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle dropdown-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Tài khoản
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @*CHƯA ĐNHAP*@
+                      @*  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="@Url.Action("SignUp","User")">Đăng ký tài khoản</a></li>
                             <li><a class="dropdown-item" href="#">Đăng nhập tài khoản</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Tiki</a></li>
-                        </ul>
+                        </ul>*@
+
+                        @*ĐÃ ĐNHAP*@
+
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item">Xin chào Jason !</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="@Url.Action("General","User")">Quản lý chung</a></li>
+                        <li><a class="dropdown-item" href="#">Chăm sóc khách hàng</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                    </ul>
                     </li>
                 </ul>
 

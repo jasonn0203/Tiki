@@ -13,6 +13,11 @@ namespace Tiki.Controllers
             return View();
         }
 
-    
+        public ActionResult ProductByCategory()
+        {
+            return View();
+        }
+
+
     }
 }

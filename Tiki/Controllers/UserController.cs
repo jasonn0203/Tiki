@@ -24,7 +24,7 @@ namespace Tiki.Controllers
             return View();
         }
 
-        public ActionResult Orders()
+        public ActionResult General()
         {
             return View();
         }

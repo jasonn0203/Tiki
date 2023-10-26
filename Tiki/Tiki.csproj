@@ -223,10 +223,11 @@
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Cart\Checkout.cshtml" />
     <Content Include="Views\User\Invoices.cshtml" />
-    <Content Include="Views\User\Orders.cshtml" />
     <Content Include="Views\Shared\_SellerLayout.cshtml" />
     <Content Include="Views\Seller\Dashboard.cshtml" />
     <Content Include="Views\Seller\Management.cshtml" />
+    <Content Include="Views\User\General.cshtml" />
+    <Content Include="Views\Home\ProductByCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

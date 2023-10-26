@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "General";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="nav nav-pills nav-justified mb-3" style="border-style: solid; border-radius: 12px; border-width: 1px; border-color: rgb(128, 128, 128,0.2);" id="pills-tab" role="tablist">
+
+    <li class="nav-item border-end" role="presentation">
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false">Đơn hàng</button>
+    </li>
+    <li class="nav-item border-end" role="presentation">
+        <button class="nav-link" id="pills-comments-tab" data-bs-toggle="pill" data-bs-target="#pills-comments" type="button" role="tab" aria-controls="pills-comments" aria-selected="false">Lịch sử đánh giá</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Thông tin tài khoản</button>
+    </li>
+</ul>
+
+
+<div class="tab-content" id="pills-tabContent">
+
+    <div class="tab-pane fade show active " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="container d-flex flex-column flex-md-row align-items-center gap-2">
+            <div class="card  flex-md-row  align-items-center" style="width: fit-content">
+                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                    <img src="https://th.bing.com/th/id/OIP.rG8fM9GW4btcOiC4N9wv1AHaH6?pid=ImgDet&rs=1" class="img-thumbnail" width="150" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Đơn hàng ngày 23/10/2023</h5>
+                    <p class="card-text">15.000.000 <sup>đ</sup></p>
+                    <a href="@Url.Action("Invoices","User")" class="btn btn-primary">Xem hóa đơn</a>
+                    <a href="#!" class="btn btn-danger">Hủy đơn hàng</a>
+                </div>
+            </div>
+            <div class="card  flex-md-row  align-items-center" style="width: fit-content">
+                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                    <img src="https://th.bing.com/th/id/OIP.rG8fM9GW4btcOiC4N9wv1AHaH6?pid=ImgDet&rs=1" class="img-thumbnail" width="150" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Đơn hàng ngày 23/10/2023</h5>
+                    <p class="card-text">1.000.000 <sup>đ</sup></p>
+                    <a href="@Url.Action("Invoices","User")" class="btn btn-primary">Xem hóa đơn</a>
+                    <a href="#!" class="btn btn-danger">Hủy đơn hàng</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab">123</div>
+
+
+
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
+        <div class="card">
+            <div class="card-body p-4 p-md-5">
+                <h3 class="mb-4 pb-2">Thông tin cá nhân của bạn</h3>
+
+                <form action="">
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+
+                            <div class="form-outline">
+                                <i class="fas fa-user fa-lg me-1 fa-fw"></i>
+                                <label class="form-label" for="name">Tên</label>
+                                <input type="text" id="name" class="form-control  form-control-lg" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mb-4">
+
+                            <div class="form-outline">
+                                <i class="fa-solid fa-lg fa-fw me-1 fa-location-dot"></i>
+                                <label class="form-label" for="address">Địa chỉ</label>
+                                <input type="text" id="address" class="form-control  form-control-lg" />
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+
+                            <div class="form-outline">
+                                <i class="fas fa-envelope fa-lg me-1 fa-fw"></i>
+                                <label class="form-label" for="emailAddress">Email</label>
+                                <input type="email" id="emailAddress" class="form-control  form-control-lg" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mb-4">
+
+                            <div class="form-outline">
+                                <i class="fa-solid fa-lg fa-fw me-1 fa-phone"></i>
+                                <label class="form-label" for="phoneNumber">Số điện thoại</label>
+                                <input type="tel" id="phoneNumber" class="form-control  form-control-lg" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+
+                            <div class="form-outline">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <label class="form-label" for="typeText">Số thẻ</label>
+                                <input type="text" id="typeText" class="form-control form-control-lg" size="17"
+                                       placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                            </div>
+
+                        </div>
+                        <div class="col-md-5 mb-4">
+
+                            <div class="form-outline">
+                                <i class="fa-regular fa-calendar-xmark"></i>
+                                <label class="form-label" for="expirationDate">Ngày hết hạn</label>
+                                <input type="text" id="expirationDate" class="form-control form-control-lg"
+                                       placeholder="05/2023" size="7" minlength="7" maxlength="7" oninput="formatExpirationDate(this)" />
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-md-1">
+                            <div class="form-outline form-white">
+                                <i class="fa-brands fa-css3-alt"></i>
+                                <label class="form-label" for="CVV">Cvv</label>
+                                <input type="password" id="CVV" class="form-control form-control-lg"
+                                       placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <input class="btn btn-primary bg-main-blue btn-lg" type="submit" value="Cập nhật" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function formatExpirationDate(input) {
+        // Lấy giá trị nhập vào
+        var value = input.value;
+
+        // Loại bỏ các ký tự không phải số và "/"
+        value = value.replace(/[^0-9/]/g, '');
+
+        // Kiểm tra độ dài
+        if (value.length > 7) {
+            value = value.substr(0, 7);
+        }
+
+        // Tách tháng và năm
+        var parts = value.split('/');
+
+        // Định dạng lại giá trị ngày tháng
+        if (parts[0]) {
+            parts[0] = parts[0].substring(0, 2);
+            if (parseInt(parts[1]) < 1) {
+                parts[0] = '01';
+            } else if (parseInt(parts[0]) > 12) {
+                parts[0] = '12';
+            }
+        }
+
+        if (parts[1]) {
+            parts[1] = parts[1].substring(0, 4);
+        }
+
+        // Gán giá trị đã định dạng lại vào trường nhập
+        input.value = parts.join('/');
+
+        // Tự động thêm "/" sau khi nhập hai số đầu
+        if (input.selectionStart === 2 && input.selectionEnd === 2 && input.value.length === 2) {
+            input.value = input.value + '/';
+        }
+    }
+</script>
