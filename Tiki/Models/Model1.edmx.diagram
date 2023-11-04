@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8f6fd1c6cee24437a032e37db9c0b41b" Name="Diagram1">
+        <EntityTypeShape EntityType="TikiModel.BinhLuan" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TikiModel.GioHang" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TikiModel.HoaDon" Width="1.5" PointX="10.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TikiModel.KhachHang" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TikiModel.KhuyenMai" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TikiModel.NhaCungCap" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TikiModel.PhanLoaiSP" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TikiModel.SanPham" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="TikiModel.FK_BinhLuan_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_BinhLuan_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_GioHang_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_GioHang_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_HoaDon_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_HoaDon_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_KhuyenMai_NhaCC" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_SanPham_KhuyenMai" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_SanPham_NhaCungCap" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_SanPham_PhanLoaiSanPham" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

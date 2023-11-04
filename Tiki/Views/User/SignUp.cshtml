@@ -1,4 +1,4 @@
-﻿
+﻿@model Tiki.Models.KhachHang
 @{
     ViewBag.Title = "Tạo tài khoản mới tại TiKi";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,29 +18,38 @@
                                     <img src="~/Assets/tiki_logo.png" width="50" height="50" />
                                 </p>
 
-                                <form class="mx-1 mx-md-4">
+                                @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new { @class = "mx-1 mx-md-4" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                            <label class="form-label" for="name">Tên của bạn</label>
-                                            <input type="text" id="name" class="form-control" />
+                                            @Html.LabelFor(model => model.TenKhachHang, new { @class = "form-label" })
+                                            @Html.TextBoxFor(model => model.TenKhachHang, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.TenKhachHang)
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fa-solid fa-lg fa-fw me-3 fa-location-dot"></i>
-                                            <label class="form-label" for="address">Địa chỉ</label>
-                                            <input type="text" id="address" class="form-control" />
+                                            @Html.LabelFor(model => model.DiaChi, new { @class = "form-label" })
+                                            @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fa-solid fa-lg fa-fw me-3 fa-phone"></i>
-                                            <label class="form-label" for="phone">Số điện thoại</label>
-                                            <input type="text" id="phone" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></>
+                                            @Html.LabelFor(model => model.SoDienThoai, new { @class = "form-label" })
+                                            @Html.TextBoxFor(model => model.SoDienThoai, new { @class = "form-control", onkeypress = "return event.charCode >= 48 && event.charCode <= 57" })
+                                            @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+
 
                                         </div>
                                     </div>
@@ -48,8 +57,9 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                            <label class="form-label" for="email">Email</label>
-                                            <input type="email" id="email" class="form-control" />
+                                            @Html.LabelFor(model => model.Email, new { @class = "form-label" })
+                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email" })
+                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
@@ -57,14 +67,15 @@
 
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                            <label class="form-label" for="mk">Mật khẩu</label>
-                                            <input type="password" id="mk" class="form-control" />
+                                            @Html.LabelFor(model => model.MatKhau, new { @class = "form-label" })
+                                            @Html.TextBoxFor(model => model.MatKhau, new { @class = "form-control", @type = "password" })
+                                            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
 
                                     <div class="form-check d-flex mb-2">
-                                        <input class="form-check-input me-2" type="checkbox" checked  id="terms" />
+                                        <input class="form-check-input me-2" type="checkbox" checked id="terms" />
                                         <label class="form-check-label" for="terms">
                                             Tôi đã đồng ý <a href="#!">các điều khoản.</a>
                                         </label>
@@ -73,10 +84,11 @@
                                     <p class="text-muted mb-4">Đã có tài khoản ? <a href="@Url.Action("SignIn","User")">Đăng nhập ngay</a> </p>
 
                                     <div class="d-flex justify-content-center mb-3 mb-lg-4 w-100">
-                                        <button type="button" class="btn btn-primary btn-lg w-100">Đăng ký ngay!</button>
+                                        <button type="submit" class="btn btn-primary btn-lg w-100">Đăng ký ngay!</button>
                                     </div>
-
-                                </form>
+                                }
+                       @*         <form class="mx-1 mx-md-4">
+                                </form>*@
 
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">

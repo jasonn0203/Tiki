@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Tiki.Models;
+@model List<PhanLoaiSP>
+
+@{
     ViewBag.Title = "Home Page";
 }
 <link rel="stylesheet" href="~/Content/home.css" />
@@ -12,22 +15,14 @@
         <p class="main-title">Danh Mục</p>
 
         <div class="row">
-            <div class="col-md-12 col-4 mb-4 cate-item main-hover">
-                <img class="rounded-2" src="~/Assets/qr_app.png" width="32" height="32" />
-                <span class="tiki-title">Đồ chơi</span>
-            </div>
-            <div class="col-md-12 col-4 mb-4 cate-item main-hover">
-                <img class="rounded-2" src="~/Assets/qr_app.png" width="32" height="32" />
-                <span class="tiki-title">Đồ chơi</span>
-            </div>
-            <div class="col-md-12 col-4 mb-4 cate-item main-hover">
-                <img class="rounded-2" src="~/Assets/qr_app.png" width="32" height="32" />
-                <span class="tiki-title">Đồ chơi</span>
-            </div>
-            <div class="col-md-12 col-4 mb-4 cate-item main-hover">
-                <img class="rounded-2" src="~/Assets/qr_app.png" width="32" height="32" />
-                <span class="tiki-title">Đồ chơi</span>
-            </div>
+            @foreach (var item in Model)
+            {
+                <div class="col-md-12 col-4 mb-4 cate-item main-hover">
+                    <img class="rounded-2" src="@item.Icon" width="32" height="32" />
+                    <span class="tiki-title">@item.TenPhanLoai</span>
+                </div>
+            }
+
 
         </div>
     </div>
@@ -133,7 +128,7 @@
 
                             </div>
                         </div>
-                 
+
                     </div>
 
                 </div>
