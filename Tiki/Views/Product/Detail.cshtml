@@ -1,4 +1,5 @@
-﻿
+﻿@using Tiki.Models;
+@model SanPham
 @{
     ViewBag.Title = "ProductDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,13 +17,13 @@
                         <div id="productImageCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active" data-bs-interval="2000">
-                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-fill mx-auto" src="~/Assets/vinamilk_banner.png" />
+                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-fill mx-auto" src="@Model.HinhAnh1" />
                                 </div>
                                 <div class="carousel-item" data-bs-interval="2000">
-                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-fill mx-auto" src="~/Assets/ad-banner2.png" />
+                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-fill mx-auto" src="@Model.HinhAnh2" />
                                 </div>
                                 <div class="carousel-item" data-bs-interval="2000">
-                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-fill mx-auto" src="https://th.bing.com/th/id/OIP.v9juJErpdNQgRY403jIucQHaJl?pid=ImgDet&rs=1" />
+                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-fill mx-auto" src="@Model.HinhAnh3" />
                                 </div>
                             </div>
                             <button class="carousel-control-prev ms-4" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
@@ -39,44 +40,121 @@
                     <div class="col-md-6 d-flex flex-column p-0">
                         @*Tiêu đề*@
                         <div class=" bg-white ms-4 p-3 mb-2  rounded-4 d-flex flex-column  ">
-                            <p class="cate-item">Thương hiệu : <span class="main-blue-color fw-bold">ABCXYZ</span> </p>
+                            <p class="cate-item">Thương hiệu : <span class="main-blue-color fw-bold">@Model.ThuongHieu</span> </p>
 
                             <p class="my-2 fw-bolder tiki-title fs-4 h-auto truncate-4">
-                                Loa Bluetooth GUTEK C3 MINI Nghe Nhạc Cầm Tay Không Dây, Vỏ Nhôm Nghe Nhạc Hay, Âm Thanh Chất Lượng, Hỗ Trợ Kết Nối Bluetooth 4.0, Thẻ Nhớ, Đài FM, Usb, Nhiều Màu Sắc - Hàng Chính Hãng  Sắc - Hàng Chính Hãng  Sắc - Hàng Chính Hãng
+                                @Model.TenSanPham
                             </p>
 
-                            <p class="fs-5 fw-bold ">Giá : <span class="fs-3 fw-bolder main-blue-color">119.998 <sup>₫</sup></span>  </p>
+                            <p class="fs-5 fw-bold ">Giá : <span class="fs-3 fw-bolder main-blue-color">  @string.Format("{0:N0}", Model.Gia) <sup>₫</sup></span>  </p>
                         </div>
 
                         @*Thông tin chi tiết*@
-                        <div class=" bg-white ms-4 p-3 my-2  rounded-4 d-flex flex-column  ">
-                            <p class="main-title">Thông tin chi tiết</p>
+                    <div class=" bg-white ms-4 p-3 my-2  rounded-4 d-flex flex-column  ">
+                        <p class="main-title">Thông tin chi tiết</p>
 
 
+                        @if (Model.ThuongHieu != null)
+                        {
                             <div class="row border-bottom p-2 ">
-                                <div class="col-md-8">Thương hiệu </div>
-                                <div class="col-md-4 border-start">ABCXYZ</div>
+                                <div class="col-md-8 main-blue-color">Thương hiệu </div>
+                                <div class="col-md-4 border-start">@Model.ThuongHieu</div>
                             </div>
-                            <div class="row border-bottom p-2 ">
-                                <div class="col-md-8">Xuất xứ </div>
-                                <div class="col-md-4 border-start">Việt Nam</div>
-                            </div>
-                            <div class="row border-bottom p-2 ">
-                                <div class="col-md-8">Năm sản xuất </div>
-                                <div class="col-md-4 border-start">2023</div>
-                            </div>
-                            <div class="row border-bottom p-2 ">
-                                <div class="col-md-8">Bảo hành </div>
-                                <div class="col-md-4 border-start">24 tháng</div>
-                            </div>
-                            <div class="row border-bottom  p-2 ">
-                                <div class="col-md-8">Khối lượng </div>
-                                <div class="col-md-4 border-start">25kg</div>
-                            </div>
+                        }
 
+                        @if (Model.XuatXu != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">Xuất xứ </div>
+                                <div class="col-md-4 border-start">@Model.XuatXu</div>
+                            </div>
+                        }
 
+                        @if (Model.Camera != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">Camera </div>
+                                <div class="col-md-4 border-start">@Model.Camera</div>
+                            </div>
+                        }
 
-                        </div>
+                        @if (Model.ROM != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">ROM </div>
+                                <div class="col-md-4 border-start">@Model.ROM GB</div>
+                            </div>
+                        }
+
+                        @if (Model.RAM != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">RAM </div>
+                                <div class="col-md-4 border-start">@Model.RAM GB</div>
+                            </div>
+                        }
+
+                        @if (Model.CPU != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">CPU </div>
+                                <div class="col-md-4 border-start">@Model.CPU</div>
+                            </div>
+                        }
+
+                        @if (Model.ChipDoHoa != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">Đồ họa </div>
+                                <div class="col-md-4 border-start">@Model.ChipDoHoa</div>
+                            </div>
+                        }
+
+                        @if (Model.KhoiLuong != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">Khối lượng </div>
+                                <div class="col-md-4 border-start">
+                                    @string.Format("{0:0.0}", Model.KhoiLuong) kg
+
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.KichThuocMH != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">Kích thước màn hình </div>
+                                <div class="col-md-4 border-start">
+                                    @string.Format("{0:0.0}", Model.KichThuocMH) inches
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.CongSuat != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">Công suất </div>
+                                <div class="col-md-4 border-start">@Model.CongSuat  </div>
+                            </div>
+                        }
+
+                        @if (Model.BaoHanh != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">Bảo hành </div>
+                                <div class="col-md-4 border-start">@Model.BaoHanh tháng</div>
+                            </div>
+                        }
+
+                        @if (Model.ChucNangKhac != null)
+                        {
+                            <div class="row border-bottom p-2 ">
+                                <div class="col-md-8 main-blue-color">Chức năng khác </div>
+                                <div class="col-md-4 border-start">@Model.ChucNangKhac  </div>
+                            </div>
+                        }
+                    </div>
 
                         @*Store*@
                         <div class=" bg-white ms-4 p-3 my-2  rounded-4 d-flex flex-column  ">
@@ -90,7 +168,7 @@
                                 </div>
 
                                 <div class="d-flex flex-column">
-                                    <p class="main-title m-0">Tiki Trading <span class="badge rounded-pill bg-main-blue ms-1">Official</span></p>
+                                    <p class="main-title m-0">@Model.NhaCungCap.TenNhaCungCap <span class="badge rounded-pill bg-main-blue ms-1">Official</span></p>
                                     <p class="m-0"><span class="main-blue-color fw-bold">20</span> sản phẩm</p>
                                 </div>
 
@@ -107,13 +185,7 @@
 
                             <div>
                                 <p class="lh-lg ">
-                                    Bạn đang sở hữu một cửa hàng, nhưng chưa biết cách quản lý?
-
-                                    Làm sao để kinh doanh cửa hàng hiệu quả và sinh lời như ý?
-
-                                    Trong thời đại công nghệ 4.0, việc làm chủ một cửa hàng không chỉ đòi hỏi bạn phải am hiểu tâm lý con người, nhân viên và khách hàng, lựa chọn địa điểm thích hợp, trang trí không gian trưng bày bắt mắt, mà còn phải biết cách marketing quảng bá trên các kênh truyền thông để tăng thêm độ tin cậy cho sản phẩm.
-
-                                    Tất tần tật các bí quyết “siêu hay” để quản lý cửa hàng truyền thống offline và online đều nằm trong GIAO CHO BẠN MỘT CỬA HÀNG, QUẢN LÝ THẾ NÀY MỚI MAU GIÀU!
+                                    @Model.MoTa
                                 </p>
                             </div>
 

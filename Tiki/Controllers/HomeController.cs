@@ -9,12 +9,15 @@ namespace Tiki.Controllers
 {
     public class HomeController : Controller
     {
-        TikiDatabase db = new TikiDatabase(); 
+        readonly TikiDatabase db = new TikiDatabase();
         public ActionResult Index()
         {
-            var phanLoaiList = db.PhanLoaiSPs.ToList();
-            return View(phanLoaiList);
+            ViewBag.PhanLoaiList = db.PhanLoaiSPs.ToList();
+            ViewBag.SanPhamList = db.SanPhams.ToList();
+
+            return View();
         }
+
 
         public ActionResult ProductByCategory()
         {
@@ -23,4 +26,5 @@ namespace Tiki.Controllers
 
 
     }
+
 }

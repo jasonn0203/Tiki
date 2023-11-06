@@ -9,22 +9,28 @@ namespace Tiki.Controllers
 {
     public class SellerController : Controller
     {
+        readonly TikiDatabase db = new TikiDatabase();
 
-        TikiDatabase db = new TikiDatabase();
+
         // GET: Seller
         public ActionResult Dashboard()
         {
-            ViewBag.Tab = "Dashboard";
             if (Session["NhaCungCap"] == null)
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
+            ViewBag.Tab = "Dashboard";
+
 
             return View();
         }
 
         public ActionResult Management()
         {
+            if (Session["NhaCungCap"] == null)
+            {
+                return RedirectToAction("SellerSignIn", "Seller");
+            }
             ViewBag.Tab = "Management";
 
             return View();
@@ -121,8 +127,66 @@ namespace Tiki.Controllers
 
         public ActionResult ProductList()
         {
+            if (Session["NhaCungCap"] == null)
+            {
+                return RedirectToAction("SellerSignIn", "Seller");
+            }
+            ViewBag.Tab = "ProductList";
+
+
+            /*Lấy ds sp*/
+            // Lấy mã chủ nhà từ session
+            var maNCC = ((NhaCungCap)Session["NhaCungCap"]).MaNCC;
+
+            // Lấy danh sách các phòng thuộc mã chủ nhà
+            List<SanPham> spList = db.SanPhams.Where(s => s.MaNCC == maNCC).ToList();
+
+            if (spList == null || spList.Count == 0)
+            {
+                ViewBag.Message = "List sản phẩm hiện đang trống !";
+                return View();
+            }
+            return View(spList);
+
+        }
+
+
+        /*THÊM SP*/
+        public ActionResult AddProduct()
+        {
+            if (Session["NhaCungCap"] == null)
+            {
+                return RedirectToAction("SellerSignIn", "Seller");
+            }
+            // Thêm logic tại đây để hiển thị giao diện thêm sản phẩm
+            ViewBag.PhanLoaiList = new SelectList(db.PhanLoaiSPs, "MaPhanLoai", "TenPhanLoai");
+
+            var nhaCungCap = (NhaCungCap)Session["NhaCungCap"];
+            ViewBag.MaNCC = nhaCungCap.MaNCC;
+
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddProduct(SanPham sanPham)
+        {
+            if (ModelState.IsValid)
+            {
+                /*Lấy mã nhà cung cấp*/
+
+                var nhaCungCap = (NhaCungCap)Session["NhaCungCap"];
+                sanPham.MaNCC = nhaCungCap.MaNCC;
+
+                db.SanPhams.Add(sanPham);
+                db.SaveChanges();
+                return RedirectToAction("ProductList");
+            }
+
+            ViewBag.PhanLoaiList = new SelectList(db.PhanLoaiSPs, "MaPhanLoai", "TenPhanLoai");
+            ViewBag.MaNCC = sanPham.MaNCC;
+
+            return View(sanPham);
+        }
     }
+
 }

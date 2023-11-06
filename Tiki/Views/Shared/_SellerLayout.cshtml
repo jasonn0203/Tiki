@@ -6,6 +6,7 @@
     <title>Seller - Dashboard</title>
 
     <link href="~/Content/admin.css" rel="stylesheet" media="all">
+    <link href="~/Content/product-list.css" rel="stylesheet" media="all">
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -42,14 +43,14 @@
                                 <i class="fa-solid fa-bars-progress   @(ViewBag.Tab == "Management" ? "fa-spin" : "")"></i>Quản lý chung
                             </a>
                         </li>
-                        <li>
+                        <li class="@(ViewBag.Tab == "" ? "active" : "")">
                             <a class="text-decoration-none" href="chart.html">
                                 <i class="fas fa-chart-bar "></i>Biểu đồ
                             </a>
                         </li>
-                        <li>
-                            <a class="text-decoration-none" href="table.html">
-                                <i class="fas fa-table "></i>Danh sách
+                        <li class="@(ViewBag.Tab == "ProductList" ? "active" : "")">
+                            <a class="text-decoration-none" href="@Url.Action("ProductList","Seller")">
+                                <i class="fas fa-table  @(ViewBag.Tab == "ProductList" ? "fa-spin" : "")"></i>Danh sách sản phẩm
                             </a>
                         </li>
 

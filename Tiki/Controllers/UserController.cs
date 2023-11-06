@@ -9,8 +9,7 @@ namespace Tiki.Controllers
 {
     public class UserController : Controller
     {
-
-        TikiDatabase db = new TikiDatabase();
+        readonly TikiDatabase db = new TikiDatabase();
         // GET: User
         public ActionResult SignUp()
         {
