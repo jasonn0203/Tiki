@@ -15,6 +15,10 @@
 
 <body>
 
+    @{
+        var tk = Session["NhaCungCap"] as Tiki.Models.NhaCungCap;
+    }
+
     <div class="page-wrapper">
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
@@ -72,9 +76,9 @@
                                 <div class="account-item clearfix js-item-menu">
 
                                     <div class="content d-flex gap-2">
-                                        <p class="js-acc-btn">john doe</p>
+                                        <p class="js-acc-btn">@tk.TenNhaCungCap</p>
 
-                                        <a href="">
+                                        <a href="@Url.Action("LogOut","Seller")">
                                             <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                         </a>
                                     </div>

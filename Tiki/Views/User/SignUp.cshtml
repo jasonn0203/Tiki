@@ -24,6 +24,8 @@
 
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+
+
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -33,11 +35,15 @@
                                         </div>
                                     </div>
 
+
+
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fa-solid fa-lg fa-fw me-3 fa-location-dot"></i>
-                                            @Html.LabelFor(model => model.DiaChi, new { @class = "form-label" })
-                                            @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control" })
+
+
+                                            <label class="form-label" for="address">Địa chỉ</label>
+                                            <input type="text" id="address" name="DiaChi" class="form-control" />
                                             @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
 
                                         </div>
@@ -46,8 +52,8 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fa-solid fa-lg fa-fw me-3 fa-phone"></i>
-                                            @Html.LabelFor(model => model.SoDienThoai, new { @class = "form-label" })
-                                            @Html.TextBoxFor(model => model.SoDienThoai, new { @class = "form-control", onkeypress = "return event.charCode >= 48 && event.charCode <= 57" })
+                                            <label class="form-label" for="sdt">Số điện thoại</label>
+                                            <input type="text" id="sdt" name="SoDienThoai" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
                                             @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
 
 
@@ -67,8 +73,9 @@
 
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                            @Html.LabelFor(model => model.MatKhau, new { @class = "form-label" })
-                                            @Html.TextBoxFor(model => model.MatKhau, new { @class = "form-control", @type = "password" })
+
+                                            <label class="form-label" for="mk">Mật khẩu</label>
+                                            <input type="password" id="mk" name="MatKhau" class="form-control" />
                                             @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -87,10 +94,10 @@
                                         <button type="submit" class="btn btn-primary btn-lg w-100">Đăng ký ngay!</button>
                                     </div>
                                 }
-                       @*         <form class="mx-1 mx-md-4">
-                                </form>*@
+
 
                             </div>
+
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
                                 <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?w=740&t=st=1698067957~exp=1698068557~hmac=ba08d5b6248f7d9f376b7855df8afa595bbac663fbaf47b553c2da1911d45212"

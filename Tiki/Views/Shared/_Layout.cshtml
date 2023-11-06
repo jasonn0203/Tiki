@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiki</title>
     <link rel="icon" type="image/x-icon" href="~/Assets/tiki_logo.png">
@@ -9,6 +9,13 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="container-fluid p-0">
+
+
+    @{
+        var tk = Session["KhachHang"] as Tiki.Models.KhachHang;
+    }
+
+    @*Navbar*@
     <nav class="navbar navbar-expand-lg bg-white pt-4 pb-2">
         <div class="container">
             <a class="navbar-brand" href="@Url.Action("Index","Home")">
@@ -61,29 +68,47 @@
                     </li>
 
                     <!-- Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle dropdown-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Tài khoản
-                        </a>
-                        @*CHƯA ĐNHAP*@
-                      @*  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="@Url.Action("SignUp","User")">Đăng ký tài khoản</a></li>
-                            <li><a class="dropdown-item" href="#">Đăng nhập tài khoản</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Tiki</a></li>
-                        </ul>*@
-
+                    @if (tk != null)
+                    {
                         @*ĐÃ ĐNHAP*@
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle dropdown-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @tk.TenKhachHang
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item">Xin chào @tk.TenKhachHang !</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="@Url.Action("General","User")">Quản lý chung</a></li>
+                                <li><a class="dropdown-item" href="#">Chăm sóc khách hàng</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="@Url.Action("LogOut","User")">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Tài khoản
+                            </a>
+                            @*CHƯA ĐNHAP*@
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("SignUp","User")">Đăng ký tài khoản</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("SignIn","User")">Đăng nhập tài khoản</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="@Url.Action("SellerSignIn","Seller")">Đăng ký tài khoản bán hàng</a></li>
 
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item">Xin chào Jason !</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="@Url.Action("General","User")">Quản lý chung</a></li>
-                        <li><a class="dropdown-item" href="#">Chăm sóc khách hàng</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
-                    </ul>
-                    </li>
+                            </ul>
+
+
+
+                        </li>
+
+                    }
+
+
+
+
                 </ul>
 
             </div>

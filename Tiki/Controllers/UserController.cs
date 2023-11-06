@@ -53,11 +53,52 @@ namespace Tiki.Controllers
         }
 
 
-
+        //GET
         public ActionResult SignIn()
         {
+            if (Session["KhachHang"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
+
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SignIn(KhachHang kh)
+        {
+            //KT trường hợp email và mk có tồn tại trong db
+            var checkKhachHang = db.KhachHangs.FirstOrDefault(k => k.Email == kh.Email && k.MatKhau == kh.MatKhau);
+
+            if (checkKhachHang != null)
+            {
+                Session["KhachHang"] = checkKhachHang;
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không đúng !");
+                return View(kh);
+            }
+
+
+        }
+
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            Session.Abandon();
+            Session["KhachHang"] = null;
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
 
         public ActionResult Invoices()
         {

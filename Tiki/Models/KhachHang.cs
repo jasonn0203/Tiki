@@ -12,7 +12,7 @@ namespace Tiki.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
 
     public partial class KhachHang
     {
@@ -22,7 +22,7 @@ namespace Tiki.Models
             this.GioHangs = new HashSet<GioHang>();
             this.HoaDons = new HashSet<HoaDon>();
         }
-    
+
         public int MaKH { get; set; }
 
         [Required]
@@ -30,30 +30,24 @@ namespace Tiki.Models
         public string TenKhachHang { get; set; }
 
         [Required]
-        [Display(Name = "??a ch?")]
-
         public string DiaChi { get; set; }
 
         [Required]
-        [EmailAddress(ErrorMessage = "??a ch? email không h?p l?")]
-
         public string Email { get; set; }
 
         [Required]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "S? ?i?n tho?i ph?i ?? 10 ch? s?")]
-        [Display(Name = "S? ?i?n tho?i")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "SDT khong hop le")]
         public string SoDienThoai { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "M?t kh?u")]
         public string MatKhau { get; set; }
 
 
         public string SoThe { get; set; }
         public Nullable<System.DateTime> NgayHH { get; set; }
         public Nullable<short> CVV { get; set; }
-    
+
         public virtual ICollection<BinhLuan> BinhLuans { get; set; }
         public virtual ICollection<GioHang> GioHangs { get; set; }
         public virtual ICollection<HoaDon> HoaDons { get; set; }
