@@ -19,10 +19,12 @@ namespace Tiki.Controllers
         }
 
 
-        public ActionResult ProductByCategory()
+        public ActionResult ProductByCategory(string tenPL)
         {
-            return View();
+            var spTheoPLList = db.SanPhams.Where(sp => sp.PhanLoaiSP.TenPhanLoai == tenPL).ToList();
+            return View(spTheoPLList);
         }
+
 
 
     }

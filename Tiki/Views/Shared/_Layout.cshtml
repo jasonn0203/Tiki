@@ -65,7 +65,7 @@
 
                             <a href="@Url.Action("Checkout","Cart", new {maKH = tk.MaKH})" class=" nav-link main-hover btn btn-primary">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span class="badge bg-main-blue">3</span> <!-- Quantity indicator -->
+                                <span class="badge bg-main-blue">@ViewData["SoLuongSP"]</span> <!-- Quantity indicator -->
                             </a>
                         </li>
                     }

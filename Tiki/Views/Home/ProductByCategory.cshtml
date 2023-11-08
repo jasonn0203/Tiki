@@ -1,4 +1,6 @@
-﻿
+﻿@using Tiki.Models;
+@model List<SanPham>
+
 @{
     ViewBag.Title = "ProductByCategory";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,91 +16,41 @@
     <div class="col-lg-10 bg-white rounded-4 p-4 ms">
         <!-- LIST SẢN PHẨM -->
         <div class="row gy-2">
-            <div class="col-6 col-sm-4 col-md-3 custom-grid-item">
-                <a class="card m-0 overflow-hidden rounded-2 text-decoration-none" href="@Url.Action("Detail","Product")">
-                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/b0/f7/91/8e1581fb2d7321c71b3b9b14409a943b.jpg.webp" class="card-img-carousel overflow-hidden" />
-                    <div class="card-body">
 
-                        <p class="card-text truncate-2 tiki-title">
-                            Tai nghe KZ Z1 PRO Bluetooth 5.2 TWS  không dây năng động Điều khiển cảm ứng và chống nước
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">383.000</small> <sup>₫</sup>
-                    </div>
-                </a>
-            </div>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-6">
+                        <a class="card m-0 overflow-hidden rounded-2 text-decoration-none" href="@Url.Action("Detail", "Product", new { tenSP = item.TenSanPham })">
+                            <img src="@item.HinhAnh1" class="card-img-carousel overflow-hidden" />
+                            <div class="card-body">
 
-            <div class="col-6 col-sm-4 col-md-3 custom-grid-item">
-                <a class="card m-0 overflow-hidden rounded-2 text-decoration-none" href="@Url.Action("Detail","Product")">
-                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/b0/f7/91/8e1581fb2d7321c71b3b9b14409a943b.jpg.webp" class="card-img-carousel overflow-hidden" />
-                    <div class="card-body">
+                                <p class="card-text truncate-2 tiki-title">
+                                    @item.TenSanPham
+                                </p>
 
-                        <p class="card-text truncate-2 tiki-title">
-                            Tai nghe KZ Z1 PRO Bluetooth 5.2 TWS  không dây năng động Điều khiển cảm ứng và chống nước
-                        </p>
+                                <p class="card-text truncate-2 tiki-title main-blue-color fw-bold">
+                                    @item.ThuongHieu
+                                </p>
+                            </div>
+                            <div class="card-footer fs-5">
+                                Giá : <small class="main-blue-color ">@string.Format("{0:N0}", item.Gia) đ</small>
+                            </div>
+                        </a>
                     </div>
-                    <div class="card-footer">
-                        <small class="text-muted">383.000</small> <sup>₫</sup>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-4 col-md-3 custom-grid-item">
-                <a class="card m-0 overflow-hidden rounded-2 text-decoration-none" href="@Url.Action("Detail","Product")">
-                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/b0/f7/91/8e1581fb2d7321c71b3b9b14409a943b.jpg.webp" class="card-img-carousel overflow-hidden" />
-                    <div class="card-body">
+                }
+            }
+            else
+            {
+                <div class="mh-100">
 
-                        <p class="card-text truncate-2 tiki-title">
-                            Tai nghe KZ Z1 PRO Bluetooth 5.2 TWS  không dây năng động Điều khiển cảm ứng và chống nước
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">383.000</small> <sup>₫</sup>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-4 col-md-3 custom-grid-item">
-                <a class="card m-0 overflow-hidden rounded-2 text-decoration-none" href="@Url.Action("Detail","Product")">
-                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/b0/f7/91/8e1581fb2d7321c71b3b9b14409a943b.jpg.webp" class="card-img-carousel overflow-hidden" />
-                    <div class="card-body">
+                    <h2 class="alert alert-warning text-danger rounded-2">Không có sản phẩm nào ! Xin quay lại sau</h2>
+                </div>
+            }
 
-                        <p class="card-text truncate-2 tiki-title">
-                            Tai nghe KZ Z1 PRO Bluetooth 5.2 TWS  không dây năng động Điều khiển cảm ứng và chống nước
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">383.000</small> <sup>₫</sup>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-4 col-md-3 custom-grid-item">
-                <a class="card m-0 overflow-hidden rounded-2 text-decoration-none" href="@Url.Action("Detail","Product")">
-                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/b0/f7/91/8e1581fb2d7321c71b3b9b14409a943b.jpg.webp" class="card-img-carousel overflow-hidden" />
-                    <div class="card-body">
 
-                        <p class="card-text truncate-2 tiki-title">
-                            Tai nghe KZ Z1 PRO Bluetooth 5.2 TWS  không dây năng động Điều khiển cảm ứng và chống nước
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">383.000</small> <sup>₫</sup>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-4 col-md-3 custom-grid-item">
-                <a class="card m-0 overflow-hidden rounded-2 text-decoration-none" href="@Url.Action("Detail","Product")">
-                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/b0/f7/91/8e1581fb2d7321c71b3b9b14409a943b.jpg.webp" class="card-img-carousel overflow-hidden" />
-                    <div class="card-body">
 
-                        <p class="card-text truncate-2 tiki-title">
-                            Tai nghe KZ Z1 PRO Bluetooth 5.2 TWS  không dây năng động Điều khiển cảm ứng và chống nước
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">383.000</small> <sup>₫</sup>
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 

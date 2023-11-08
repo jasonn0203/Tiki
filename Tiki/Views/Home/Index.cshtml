@@ -17,10 +17,10 @@
         <div class="row">
             @foreach (var item in ViewBag.PhanLoaiList)
             {
-                <div class="col-md-12 col-4 mb-4 cate-item main-hover">
+                <a class="col-md-12 col-4 mb-4 cate-item main-hover text-decoration-none text-dark" href="@Url.Action("ProductByCategory","Home", new {tenPL = item.TenPhanLoai})">
                     <img class="rounded-2" src="@item.Icon" width="32" height="32" />
                     <span class="tiki-title">@item.TenPhanLoai</span>
-                </div>
+                </a>
             }
 
 
@@ -55,11 +55,13 @@
                                         <p class="card-text truncate-2 tiki-title">
                                             @item.TenSanPham
                                         </p>
+
+                                        <p class="card-text truncate-2 tiki-title main-blue-color fw-bold">
+                                            @item.ThuongHieu
+                                        </p>
                                     </div>
-                                    <div class="card-footer">
-                                        <small class="text-muted">
-                                            @string.Format("{0:N0}", item.Gia)
-                                        </small> <sup>₫</sup>
+                                    <div class="card-footer fs-5">
+                                        Giá : <small class="main-blue-color ">@string.Format("{0:N0}", item.Gia) đ</small>
                                     </div>
                                 </a>
                             </div>

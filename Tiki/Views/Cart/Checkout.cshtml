@@ -13,7 +13,7 @@
             <div class="col-md-8">
                 <div class="card mb-4">
                     <div class="card-header py-3">
-                        <h5 class="mb-0">Giỏ hàng - <span class="main-blue-color fw-bold fs-5">2</span> món hàng  </h5>
+                        <h5 class="mb-0">Giỏ hàng - <span class="main-blue-color fw-bold fs-5">@ViewData["SoLuongSP"]</span> món hàng  </h5>
                     </div>
 
                     @foreach (var item in Model)
@@ -169,17 +169,17 @@
 
                         <div class="d-flex justify-content-between fw-bolder">
                             <p class="mb-2">Phí giao hàng</p>
-                            <p class="mb-2">$20.00</p>
+                            <p class="mb-2">25.000 đ</p>
                         </div>
 
                         <div class="d-flex justify-content-between mb-4 fw-bolder">
                             <p class="mb-2">Tổng cộng ( Đã bao gồm thuế )</p>
-                            <p class="mb-2">@ViewBag.TongGiaTri đ</p>
+                            <p class="mb-2">@string.Format("{0:N0}", ViewBag.TongTienGioHang) đ</p>
                         </div>
 
                         <button type="button" class="btn btn-light btn-lg w-100">
-                            <div class="d-flex justify-content-between">
-                                <span class=" text-center">Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                            <div class="text-center">
+                                <span class="text-uppercase">Thanh toán ngay <i class="fas fa-long-arrow-alt-right ms-2 main-blue-color"></i></span>
                             </div>
                         </button>
 

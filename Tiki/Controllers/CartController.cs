@@ -19,72 +19,23 @@ namespace Tiki.Controllers
             }
 
             var cartItems = db.GioHangs.Where(item => item.MaKH == maKH).ToList();
+
+            var cartQuantity = db.GioHangs.Count(item => item.MaKH == maKH);
+
+            ViewData["SoLuongSP"] = cartQuantity;
+            ViewBag.TongTienGioHang = TinhTongTien(maKH);
             return View(cartItems);
         }
 
 
 
-
-
-
-        /*      [HttpPost]
-              public ActionResult AddToCart(int maSP, int soLuong)
-              {
-                  if (Session["KhachHang"] == null)
-                  {
-                      return RedirectToAction("SignIn", "User");
-                  }
-
-                  // Lấy thông tin sản phẩm từ cơ sở dữ liệu, ví dụ:
-                  var sanPham = db.SanPhams.FirstOrDefault(sp => sp.MaSP == maSP);
-
-                  if (sanPham == null || soLuong <= 0)
-                  {
-                      // Xử lý lỗi, ví dụ: sản phẩm không tồn tại hoặc số lượng không hợp lệ.
-                      return HttpNotFound();
-                  }
-
-                  // Lấy giỏ hàng từ Session, nếu không có thì tạo mới
-                  var gioHang = Session["GioHang"] as List<GioHang> ?? new List<GioHang>();
-
-                  // Tìm sản phẩm trong giỏ hàng (nếu có)
-                  var gioHangItem = gioHang.FirstOrDefault(item => item.MaSP == maSP);
-
-                  if (gioHangItem != null)
-                  {
-                      // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng.
-                      gioHangItem.SoLuong += (short)soLuong;
-                  }
-                  else
-                  {
-
-                      // Nếu sản phẩm chưa có trong giỏ hàng, thêm vào giỏ hàng.
-
-                      gioHangItem = new GioHang
-                      {
-                          MaSP = maSP,
-                          SoLuong = (short)soLuong,
-                          MaKH = ((KhachHang)Session["KhachHang"]).MaKH,
-                          TongTien = soLuong * sanPham.Gia
-
-
-                      };
-
-                      db.GioHangs.Add(gioHangItem);
-                      db.SaveChanges();
-
-                  }
-
-                  // Lưu giỏ hàng vào Session
-                  Session["GioHang"] = gioHang;
-
-                  // Sau khi thêm sản phẩm vào giỏ hàng, bạn có thể chuyển người dùng đến trang giỏ hàng hoặc trang khác.
-                  return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
-              }*/
-
-
         public ActionResult AddToCart(int maSP, int soLuong)
         {
+
+            if (Session["KhachHang"] == null)
+            {
+                return RedirectToAction("SignIn", "User");
+            }
             int maKH = ((KhachHang)Session["KhachHang"]).MaKH;
 
             var existingCartItem = db.GioHangs.FirstOrDefault(item => item.MaKH == maKH && item.MaSP == maSP);
@@ -104,22 +55,41 @@ namespace Tiki.Controllers
                     TongTien = soLuong * db.SanPhams.Find(maSP).Gia
                 };
                 db.GioHangs.Add(newCartItem);
-                
+
             }
 
             db.SaveChanges();
-    
+            
+
             return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
         }
 
         private decimal TinhTongTien(int maKH)
         {
-            decimal TongTien = 0;
-            List<GioHang> gioHang = db.GioHangs.Where(item => item.MaKH == maKH).ToList();
-            if (gioHang != null)
-                TongTien = (decimal)gioHang.Sum(sp => sp.TongTien);
-            return TongTien;
+           //Lấy giỏ hàng
+            var cartItems = db.GioHangs.Where(g => g.MaKH == maKH).ToList();
+
+            
+            decimal totalPrice = 0;
+            decimal shipPrice = 25000;
+       
+
+            // Lặp qua các item trong giỏ hàng
+            foreach (var cartItem in cartItems)
+            {
+                // Get giá SP
+                decimal productPrice = (decimal)db.SanPhams.Find(cartItem.MaSP).Gia;
+
+                // Tính tổng giá từng item
+                decimal subtotal = (decimal)(productPrice * cartItem.SoLuong);
+
+                // Tính tổng giá trị giỏ hàng
+                totalPrice += subtotal + shipPrice;
+            }
+
+            return totalPrice;
         }
+
 
     }
 }
