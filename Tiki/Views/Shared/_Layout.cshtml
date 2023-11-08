@@ -59,13 +59,17 @@
                         <a class="nav-link main-hover" href="#">Astra</a>
                     </li>
 
-                    <li class="nav-item">
+                    @if (tk != null)
+                    {
+                        <li class="nav-item">
 
-                        <a href="@Url.Action("Checkout","Cart")" class=" nav-link main-hover btn btn-primary">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="badge bg-main-blue">3</span> <!-- Quantity indicator -->
-                        </a>
-                    </li>
+                            <a href="@Url.Action("Checkout","Cart", new {maKH = tk.MaKH})" class=" nav-link main-hover btn btn-primary">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="badge bg-main-blue">3</span> <!-- Quantity indicator -->
+                            </a>
+                        </li>
+                    }
+
 
                     <!-- Dropdown -->
                     @if (tk != null)

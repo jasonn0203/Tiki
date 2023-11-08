@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TikiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TikiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BinhLuan">
           <Key>
             <PropertyRef Name="MaBinhLuan" />
@@ -21,6 +21,7 @@
           </Key>
           <Property Name="MaGioHang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SoLuong" Type="smallint" />
+          <Property Name="TongTien" Type="decimal" Precision="15" Scale="2" />
           <Property Name="MaKH" Type="int" />
           <Property Name="MaSP" Type="int" />
         </EntityType>
@@ -32,7 +33,7 @@
           <Property Name="MaKH" Type="int" />
           <Property Name="MaSP" Type="int" />
           <Property Name="NgayDat" Type="datetime" />
-          <Property Name="TongTien" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="MaGioHang" Type="int" />
         </EntityType>
         <EntityType Name="KhachHang">
           <Key>
@@ -152,6 +153,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HoaDon_GioHang">
+          <End Role="GioHang" Type="Self.GioHang" Multiplicity="0..1" />
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GioHang">
+              <PropertyRef Name="MaGioHang" />
+            </Principal>
+            <Dependent Role="HoaDon">
+              <PropertyRef Name="MaGioHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HoaDon_KhachHang">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
           <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
@@ -249,6 +262,10 @@
             <End Role="SanPham" EntitySet="SanPham" />
             <End Role="GioHang" EntitySet="GioHang" />
           </AssociationSet>
+          <AssociationSet Name="FK_HoaDon_GioHang" Association="Self.FK_HoaDon_GioHang">
+            <End Role="GioHang" EntitySet="GioHang" />
+            <End Role="HoaDon" EntitySet="HoaDon" />
+          </AssociationSet>
           <AssociationSet Name="FK_HoaDon_KhachHang" Association="Self.FK_HoaDon_KhachHang">
             <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="HoaDon" EntitySet="HoaDon" />
@@ -274,8 +291,7 @@
             <End Role="SanPham" EntitySet="SanPham" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TikiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -301,6 +317,8 @@
           <Property Name="MaSP" Type="Int32" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_GioHang_KhachHang" FromRole="GioHang" ToRole="KhachHang" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_GioHang_SanPham" FromRole="GioHang" ToRole="SanPham" />
+          <Property Name="TongTien" Type="Decimal" Precision="15" Scale="2" />
+          <NavigationProperty Name="HoaDons" Relationship="TikiModel.FK_HoaDon_GioHang" FromRole="GioHang" ToRole="HoaDon" />
         </EntityType>
         <EntityType Name="HoaDon">
           <Key>
@@ -310,9 +328,10 @@
           <Property Name="MaKH" Type="Int32" />
           <Property Name="MaSP" Type="Int32" />
           <Property Name="NgayDat" Type="DateTime" Precision="3" />
-          <Property Name="TongTien" Type="Decimal" Precision="15" Scale="2" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_HoaDon_KhachHang" FromRole="HoaDon" ToRole="KhachHang" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_HoaDon_SanPham" FromRole="HoaDon" ToRole="SanPham" />
+          <Property Name="MaGioHang" Type="Int32" />
+          <NavigationProperty Name="GioHang" Relationship="TikiModel.FK_HoaDon_GioHang" FromRole="HoaDon" ToRole="GioHang" />
         </EntityType>
         <EntityType Name="KhachHang">
           <Key>
@@ -567,7 +586,23 @@
             <End Role="PhanLoaiSP" EntitySet="PhanLoaiSPs" />
             <End Role="SanPham" EntitySet="SanPhams" />
           </AssociationSet>
+          <AssociationSet Name="FK_HoaDon_GioHang" Association="TikiModel.FK_HoaDon_GioHang">
+            <End Role="GioHang" EntitySet="GioHangs" />
+            <End Role="HoaDon" EntitySet="HoaDons" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_HoaDon_GioHang">
+          <End Type="TikiModel.GioHang" Role="GioHang" Multiplicity="0..1" />
+          <End Type="TikiModel.HoaDon" Role="HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GioHang">
+              <PropertyRef Name="MaGioHang" />
+            </Principal>
+            <Dependent Role="HoaDon">
+              <PropertyRef Name="MaGioHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -588,6 +623,7 @@
           <EntitySetMapping Name="GioHangs">
             <EntityTypeMapping TypeName="TikiModel.GioHang">
               <MappingFragment StoreEntitySet="GioHang">
+                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
                 <ScalarProperty Name="MaGioHang" ColumnName="MaGioHang" />
                 <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
                 <ScalarProperty Name="MaKH" ColumnName="MaKH" />
@@ -598,11 +634,11 @@
           <EntitySetMapping Name="HoaDons">
             <EntityTypeMapping TypeName="TikiModel.HoaDon">
               <MappingFragment StoreEntitySet="HoaDon">
+                <ScalarProperty Name="MaGioHang" ColumnName="MaGioHang" />
                 <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
                 <ScalarProperty Name="MaKH" ColumnName="MaKH" />
                 <ScalarProperty Name="MaSP" ColumnName="MaSP" />
                 <ScalarProperty Name="NgayDat" ColumnName="NgayDat" />
-                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

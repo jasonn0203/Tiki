@@ -11,15 +11,26 @@ namespace Tiki.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class GioHang
     {
+        public GioHang()
+        {
+            this.HoaDons = new HashSet<HoaDon>();
+        }
+
         public int MaGioHang { get; set; }
         public Nullable<short> SoLuong { get; set; }
         public Nullable<int> MaKH { get; set; }
         public Nullable<int> MaSP { get; set; }
-    
+        public Nullable<decimal> TongTien { get; set; }
+
+
+        public short TongSL { get; set; }
+
+
         public virtual KhachHang KhachHang { get; set; }
         public virtual SanPham SanPham { get; set; }
+        public virtual ICollection<HoaDon> HoaDons { get; set; }
     }
 }

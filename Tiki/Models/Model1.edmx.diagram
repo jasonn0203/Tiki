@@ -23,6 +23,7 @@
         <AssociationConnector Association="TikiModel.FK_SanPham_KhuyenMai" ManuallyRouted="false" />
         <AssociationConnector Association="TikiModel.FK_SanPham_NhaCungCap" ManuallyRouted="false" />
         <AssociationConnector Association="TikiModel.FK_SanPham_PhanLoaiSanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="TikiModel.FK_HoaDon_GioHang" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -18,9 +18,10 @@ namespace Tiki.Models
         public Nullable<int> MaKH { get; set; }
         public Nullable<int> MaSP { get; set; }
         public Nullable<System.DateTime> NgayDat { get; set; }
-        public Nullable<decimal> TongTien { get; set; }
+        public Nullable<int> MaGioHang { get; set; }
     
         public virtual KhachHang KhachHang { get; set; }
         public virtual SanPham SanPham { get; set; }
+        public virtual GioHang GioHang { get; set; }
     }
 }
