@@ -48,35 +48,45 @@
                                 </tr>
                             </thead>
 
-                            @foreach (var item in Model)
+                            @if (ViewBag.IsLoading == true)
                             {
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <span class="custom-checkbox">
-                                                <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                                <label for="checkbox1"></label>
-                                            </span>
-                                        </td>
-                                        <td>@item.TenSanPham</td>
-                                        <td>@item.PhanLoaiSP.TenPhanLoai</td>
-                                        <td>@string.Format("{0:N0} đ", item.Gia)</td>
-                                        <td>
-                                            <img src="@item.HinhAnh1" width="50" height="50" class="img-fluid" />
-                                        </td>
-                                        <td>
-                                            <a href="">
-                                                <i class="fa-solid fa-pen-to-square text-info"></i>
-                                            </a>
-
-                                            <a href="">
-                                                <i class="fa-solid fa-trash text-danger"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
                             }
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="custom-checkbox">
+                                                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                                    <label for="checkbox1"></label>
+                                                </span>
+                                            </td>
+                                            <td>@item.TenSanPham</td>
+                                            <td>@item.PhanLoaiSP.TenPhanLoai</td>
+                                            <td>@string.Format("{0:N0} đ", item.Gia)</td>
+                                            <td>
+                                                <img src="@item.HinhAnh1" width="50" height="50" class="img-fluid" />
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("EditProduct","Seller", new {maSP = item.MaSP})">
+                                                    <i class="fa-solid fa-pen-to-square text-info"></i>
+                                                </a>
+
+                                                <a href="">
+                                                    <i class="fa-solid fa-trash text-danger"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                }
+                            }
+
 
                         </table>
                         <div class="clearfix">

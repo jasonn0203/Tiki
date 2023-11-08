@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Tiki.Models;
@@ -19,7 +21,17 @@ namespace Tiki.Controllers
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
+            ViewBag.IsLoading = true;
+
+            var maNCC = ((NhaCungCap)Session["NhaCungCap"]).MaNCC;
+            int spCount = 0;
+
+            spCount = db.SanPhams.Count(c => c.MaNCC == maNCC);
+
+            ViewBag.SoLuongSP = spCount;
             ViewBag.Tab = "Dashboard";
+            ViewBag.IsLoading = false;
+
 
 
             return View();
@@ -99,17 +111,21 @@ namespace Tiki.Controllers
         public ActionResult SellerSignIn(NhaCungCap ncc)
         {
             //KT trường hợp email và mk có tồn tại trong db
+
             var checkNCC = db.NhaCungCaps.FirstOrDefault(n => n.Email == ncc.Email && n.MatKhau == ncc.MatKhau);
 
             if (checkNCC != null)
             {
                 Session["NhaCungCap"] = checkNCC;
 
+
                 return RedirectToAction("Dashboard", "Seller");
+
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không đúng !");
+
                 return View(ncc);
             }
 
@@ -131,10 +147,10 @@ namespace Tiki.Controllers
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
-            ViewBag.Tab = "ProductList";
+
+            ViewBag.IsLoading = true;
 
 
-            /*Lấy ds sp*/
             // Lấy mã chủ nhà từ session
             var maNCC = ((NhaCungCap)Session["NhaCungCap"]).MaNCC;
 
@@ -146,6 +162,9 @@ namespace Tiki.Controllers
                 ViewBag.Message = "List sản phẩm hiện đang trống !";
                 return View();
             }
+
+            ViewBag.Tab = "ProductList";
+            ViewBag.IsLoading = false;
             return View(spList);
 
         }
@@ -158,7 +177,8 @@ namespace Tiki.Controllers
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
-            // Thêm logic tại đây để hiển thị giao diện thêm sản phẩm
+
+            //Lấy dsach tên ploai
             ViewBag.PhanLoaiList = new SelectList(db.PhanLoaiSPs, "MaPhanLoai", "TenPhanLoai");
 
             var nhaCungCap = (NhaCungCap)Session["NhaCungCap"];
@@ -168,6 +188,7 @@ namespace Tiki.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddProduct(SanPham sanPham)
         {
             if (ModelState.IsValid)
@@ -187,6 +208,56 @@ namespace Tiki.Controllers
 
             return View(sanPham);
         }
+
+        //EDIT SP
+        // GET: 
+        public ActionResult EditProduct(int? maSP)
+        {
+            if (Session["NhaCungCap"] == null)
+            {
+                return RedirectToAction("SellerSignIn", "Seller");
+            }
+
+            if (maSP == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Lấy thông tin sản phẩm từ cơ sở dữ liệu
+            SanPham sp = db.SanPhams.Find(maSP);
+
+            if (sp == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Lấy danh sách phân loại để hiển thị lựa chọn
+            ViewBag.PhanLoaiList = new SelectList(db.PhanLoaiSPs, "MaPhanLoai", "TenPhanLoai");
+
+            return View(sp);
+        }
+
+
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProduct(SanPham sanPham)
+        {
+
+            if (ModelState.IsValid)
+            {
+                // Lưu thông tin sản phẩm đã chỉnh sửa vào cơ sở dữ liệu
+                db.Entry(sanPham).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ProductList");
+            }
+
+
+            ViewBag.PhanLoaiList = new SelectList(db.PhanLoaiSPs, "MaPhanLoai", "TenPhanLoai");
+            return View(sanPham);
+        }
+
     }
 
 }

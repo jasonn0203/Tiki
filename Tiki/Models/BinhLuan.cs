@@ -11,12 +11,15 @@ namespace Tiki.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class BinhLuan
     {
         public int MaBinhLuan { get; set; }
         public Nullable<int> MaKH { get; set; }
         public Nullable<int> MaSP { get; set; }
+
+        [Required(ErrorMessage ="N?i dung không ???c ?? tr?ng !")]
         public string NoiDung { get; set; }
         public Nullable<System.DateTime> NgayBinhLuan { get; set; }
     

@@ -66,28 +66,6 @@
 
                         }
 
-                        @foreach (var item in ViewBag.SanPhamList)
-                        {
-                            //render sản phẩm ở đây
-                            <div class="col-lg-3 col-md-6">
-                                <a class="card m-0 overflow-hidden rounded-2 text-decoration-none" href="@Url.Action("Detail", "Product")">
-                                    <img src="@item.HinhAnh1" class="card-img-carousel overflow-hidden" />
-                                    <div class="card-body">
-
-                                        <p class="card-text truncate-2 tiki-title">
-                                            @item.TenSanPham
-                                        </p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <small class="text-muted">
-                                            @string.Format("{0:N0}", item.Gia)
-                                        </small> <sup>₫</sup>
-                                    </div>
-                                </a>
-                            </div>
-
-                        }
-
 
 
                     </div>
