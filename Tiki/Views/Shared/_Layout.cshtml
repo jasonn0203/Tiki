@@ -59,16 +59,16 @@
                         <a class="nav-link main-hover" href="#">Astra</a>
                     </li>
 
+
                     @if (tk != null)
                     {
                         <li class="nav-item">
-
-                            <a href="@Url.Action("Checkout","Cart", new {maKH = tk.MaKH})" class=" nav-link main-hover btn btn-primary">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span class="badge bg-main-blue">@ViewData["SoLuongSP"]</span> <!-- Quantity indicator -->
-                            </a>
+                            @Html.Action("CartPartial", "Cart", new { maKH = tk.MaKH })
                         </li>
                     }
+
+
+
 
 
                     <!-- Dropdown -->
@@ -82,7 +82,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item">Xin chào @tk.TenKhachHang !</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="@Url.Action("General","User")">Quản lý chung</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("General","User", new {tenKH= tk.TenKhachHang})">Quản lý chung</a></li>
                                 <li><a class="dropdown-item" href="#">Chăm sóc khách hàng</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="@Url.Action("LogOut","User")">Đăng xuất</a></li>
@@ -222,7 +222,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/Scripts/jquery-3.4.1.slim.min.js"></script>
     <script src="https://kit.fontawesome.com/103727226d.js" crossorigin="anonymous"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 
     @RenderSection("scripts", required: false)

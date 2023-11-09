@@ -29,8 +29,8 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                            @Html.LabelFor(model => model.TenKhachHang, new { @class = "form-label" })
-                                            @Html.TextBoxFor(model => model.TenKhachHang, new { @class = "form-control" })
+                                            <label class="form-label" for="tenKH">Tên khách hàng</label>
+                                            <input type="text" id="tenKH" name="TenKhachHang" class="form-control" />
                                             @Html.ValidationMessageFor(model => model.TenKhachHang)
                                         </div>
                                     </div>

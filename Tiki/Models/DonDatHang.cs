@@ -12,21 +12,20 @@ namespace Tiki.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class KhuyenMai
+    public partial class DonDatHang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public KhuyenMai()
+        public DonDatHang()
         {
-            this.SanPhams = new HashSet<SanPham>();
+            this.ChiTietDonHangs = new HashSet<ChiTietDonHang>();
         }
     
-        public int MaKM { get; set; }
-        public string TenKM { get; set; }
-        public decimal UuDai { get; set; }
-        public Nullable<int> MaNCC { get; set; }
+        public int MaDonHang { get; set; }
+        public Nullable<int> MaKH { get; set; }
+        public Nullable<System.DateTime> NgayDat { get; set; }
     
-        public virtual NhaCungCap NhaCungCap { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SanPham> SanPhams { get; set; }
+        public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public virtual KhachHang KhachHang { get; set; }
     }
 }

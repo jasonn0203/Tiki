@@ -105,7 +105,7 @@ body {
 
 .card-img-carousel {
     width: 100%;
-    height: auto;
+    max-height: 237px;
     object-fit: cover;
 }
 
@@ -151,5 +151,7 @@ body {
 .custom-grid-item {
     flex: 0 0 20%; /* Set the width to 20% for 5 items in a row */
     max-width: 20%; /* Set the maximum width to 20% */
-  /* Add padding for spacing between items */
+    /* Add padding for spacing between items */
 }
+
+

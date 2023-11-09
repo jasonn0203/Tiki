@@ -8,7 +8,7 @@ namespace Tiki.Controllers
 {
     public class ProductController : Controller
     {
-        readonly TikiDatabase db = new TikiDatabase();
+        readonly TikiEntities db = new TikiEntities();
 
         // GET: Detail
         public ActionResult Detail(string tenSP)
@@ -23,6 +23,13 @@ namespace Tiki.Controllers
                 binhLuanList = db.BinhLuans.Where(bl => bl.MaSP == sanPham.MaSP).ToList();
             }
 
+            //Số lượng sp theo nhà cung cấp
+            int spCount = 0;
+            spCount = db.SanPhams.Count(c => c.MaNCC == sanPham.MaNCC);
+
+
+
+            ViewBag.SoLuongSP = spCount;
             ViewBag.BinhLuanList = binhLuanList;
 
             return View(sanPham);
@@ -53,7 +60,7 @@ namespace Tiki.Controllers
                 NgayBinhLuan = DateTime.Now
             };
 
-            using (var db = new TikiDatabase())
+            using (var db = new TikiEntities())
             {
                 db.BinhLuans.Add(binhLuan);
                 db.SaveChanges();

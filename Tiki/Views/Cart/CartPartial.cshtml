@@ -1,0 +1,16 @@
+﻿@using Tiki.Models
+
+@{
+    var tk = Session["KhachHang"] as Tiki.Models.KhachHang;
+}
+
+@if (tk != null)
+{
+    <li class="nav-item">
+
+        <a href="@Url.Action("Checkout","Cart", new {maKH = tk.MaKH})" class=" nav-link main-hover btn btn-primary">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge bg-main-blue">@ViewBag.TongSL</span> <!-- Quantity indicator -->
+        </a>
+    </li>
+}

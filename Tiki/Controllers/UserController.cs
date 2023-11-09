@@ -9,7 +9,7 @@ namespace Tiki.Controllers
 {
     public class UserController : Controller
     {
-        readonly TikiDatabase db = new TikiDatabase();
+        readonly TikiEntities db = new TikiEntities();
         // GET: User
         public ActionResult SignUp()
         {
@@ -108,8 +108,12 @@ namespace Tiki.Controllers
             return View();
         }
 
-        public ActionResult General()
+        public ActionResult General(string tenKH)
         {
+            // Lấy danh sách các phòng thuộc mã chủ nhà
+          
+
+
             return View();
         }
     }

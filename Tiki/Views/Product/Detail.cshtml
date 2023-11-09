@@ -17,13 +17,13 @@
                         <div id="productImageCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active" data-bs-interval="2000">
-                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-fill mx-auto" src="@Model.HinhAnh1" />
+                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-cover mx-auto img-fluid" src="@Model.HinhAnh1" />
                                 </div>
                                 <div class="carousel-item" data-bs-interval="2000">
-                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-fill mx-auto" src="@Model.HinhAnh2" />
+                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-cover mx-auto" src="@Model.HinhAnh2" />
                                 </div>
                                 <div class="carousel-item" data-bs-interval="2000">
-                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-fill mx-auto" src="@Model.HinhAnh3" />
+                                    <img style="width:365px; height:365px;" class="rounded-4 object-fit-cover mx-auto" src="@Model.HinhAnh3" />
                                 </div>
                             </div>
                             <button class="carousel-control-prev ms-4" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
@@ -49,6 +49,27 @@
                             <p class="fs-5 fw-bold ">Giá : <span id="giaSP" class="fs-3 fw-bolder main-blue-color">  @string.Format("{0:N0}", Model.Gia) <sup>₫</sup></span>  </p>
                         </div>
 
+                        @*TT nhà cung cấp*@
+                        <div class=" bg-white ms-4 p-3 my-2  rounded-4 d-flex flex-column  ">
+                            <p class="main-title">Thông tin người bán</p>
+
+
+                            <div class="d-flex gap-2">
+
+                                <div class=" d-flex align-items-center justify-content-center">
+                                    <img src="~/Assets/tiki_store.jpg" class="rounded-circle" width="40" height="40" />
+                                </div>
+
+                                <div class="d-flex flex-column">
+                                    <p class="main-title m-0">@Model.NhaCungCap.TenNhaCungCap <span class="badge rounded-pill bg-main-blue ms-1">Official</span></p>
+                                    <p class="m-0"><span class="main-blue-color fw-bold">@ViewBag.SoLuongSP</span> sản phẩm</p>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
                         @*Thông tin chi tiết*@
                         <div class=" bg-white ms-4 p-3 my-2  rounded-4 d-flex flex-column  ">
                             <p class="main-title">Thông tin chi tiết</p>
@@ -62,13 +83,24 @@
                                 </div>
                             }
 
-                            @if (Model.XuatXu != null)
+                            @if (Model.MaPhanLoai == 4)
                             {
                                 <div class="row border-bottom p-2 ">
-                                    <div class="col-md-8 main-blue-color">Xuất xứ </div>
-                                    <div class="col-md-4 border-start">@Model.XuatXu</div>
+                                    <div class="col-md-8 main-blue-color">Năm xuất bản </div>
+                                    <div class="col-md-4 border-start">@Model.XuatXu  </div>
                                 </div>
                             }
+                            else
+                            {
+                                if (Model.XuatXu != null)
+                                {
+                                    <div class="row border-bottom p-2 ">
+                                        <div class="col-md-8 main-blue-color">Xuất xứ </div>
+                                        <div class="col-md-4 border-start">@Model.XuatXu</div>
+                                    </div>
+                                }
+                            }
+
 
                             @if (Model.Camera != null)
                             {
@@ -147,36 +179,27 @@
                                 </div>
                             }
 
-                            @if (Model.ChucNangKhac != null)
+                            @if (Model.MaPhanLoai == 4)
                             {
                                 <div class="row border-bottom p-2 ">
-                                    <div class="col-md-8 main-blue-color">Chức năng khác </div>
+                                    <div class="col-md-8 main-blue-color">Tác giả </div>
                                     <div class="col-md-4 border-start">@Model.ChucNangKhac  </div>
                                 </div>
                             }
-                        </div>
-
-                        @*Store*@
-                        <div class=" bg-white ms-4 p-3 my-2  rounded-4 d-flex flex-column  ">
-                            <p class="main-title">Thông tin người bán</p>
-
-
-                            <div class="d-flex gap-2">
-
-                                <div class=" d-flex align-items-center justify-content-center">
-                                    <img src="~/Assets/tiki_store.jpg" class="rounded-circle" width="40" height="40" />
-                                </div>
-
-                                <div class="d-flex flex-column">
-                                    <p class="main-title m-0">@Model.NhaCungCap.TenNhaCungCap <span class="badge rounded-pill bg-main-blue ms-1">Official</span></p>
-                                    <p class="m-0"><span class="main-blue-color fw-bold">20</span> sản phẩm</p>
-                                </div>
-
-                            </div>
-
-
+                            else
+                            {
+                                if (Model.ChucNangKhac != null)
+                                {
+                                    <div class="row border-bottom p-2 ">
+                                        <div class="col-md-8 main-blue-color">Chức năng khác </div>
+                                        <div class="col-md-4 border-start">@Model.ChucNangKhac  </div>
+                                    </div>
+                                }
+                            }
 
                         </div>
+
+
 
                         @*Mô tả SP*@
                         <div class=" bg-white ms-4 p-3 my-2  rounded-4 d-flex flex-column  ">
@@ -317,42 +340,42 @@
 
 
 <script>
-    function incrementQuantity(button) {
-        const input = button.parentNode.querySelector('input[type=number]');
-        if (input.value < 15) {
-            input.stepUp();
-            updateProvisionalPrice();
-        }
+  function incrementQuantity(button) {
+    const input = button.parentNode.querySelector('input[type=number]');
+    if (input.value < 15) {
+      input.stepUp();
+      updateProvisionalPrice();
+    }
+  }
+
+  function decrementQuantity(button) {
+    const input = button.parentNode.querySelector('input[type=number]');
+    if (input.value !== "0") {
+      input.stepDown();
+      updateProvisionalPrice();
+    }
     }
 
-    function decrementQuantity(button) {
-        const input = button.parentNode.querySelector('input[type=number]');
-        if (input.value !== "0") {
-            input.stepDown();
-            updateProvisionalPrice();
-        }
-    }
 
+  //Cập nhật giá tiền
+  function updateProvisionalPrice() {
     const quantityInput = document.getElementById('soLuong');
-    const provisionalPriceElement = document.getElementById('tamTinh');
+    const priceElement = document.getElementById('tamTinh');
+    const gia = parseFloat('@Model.Gia'); // Lấy giá từ Model và chuyển đổi thành số thực
 
-    const productPrice = parseFloat(document.getElementById('giaSP').textContent);
-    provisionalPriceElement = productPrice;
+    const quantity = parseInt(quantityInput.value);
+    const total = quantity * gia;
 
+    // Format và hiển thị tổng tạm tính
+    priceElement.innerText = formatCurrency(total);
+  }
 
+  function formatCurrency(amount) {
+    return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  }
 
-    //Format lại tiền theo VND
-    function formatPrice(price) {
-        return price.toFixed(6).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-
-    function updateProvisionalPrice() {
-        const newProvisionalPrice = productPrice * quantityInput.valueAsNumber;
-        const formattedPrice = formatPrice(newProvisionalPrice);
-        provisionalPriceElement.textContent = ` ${formattedPrice} ₫`;
-    }
-
-
-
-
+  // Gọi hàm cập nhật giá khi trang được tải
+  document.addEventListener('DOMContentLoaded', function () {
+    updateProvisionalPrice();
+  });
 </script>

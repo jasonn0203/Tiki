@@ -9,7 +9,7 @@ namespace Tiki.Controllers
 {
     public class HomeController : Controller
     {
-        readonly TikiDatabase db = new TikiDatabase();
+        readonly TikiEntities db = new TikiEntities();
         public ActionResult Index()
         {
             ViewBag.PhanLoaiList = db.PhanLoaiSPs.ToList();

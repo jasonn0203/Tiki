@@ -6,6 +6,10 @@
     ViewBag.Title = "Checkout";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    var tk = Session["KhachHang"] as Tiki.Models.KhachHang;
+}
+
 
 <section class="">
     <div class="container py-5">
@@ -13,13 +17,13 @@
             <div class="col-md-8">
                 <div class="card mb-4">
                     <div class="card-header py-3">
-                        <h5 class="mb-0">Giỏ hàng - <span class="main-blue-color fw-bold fs-5">@ViewData["SoLuongSP"]</span> món hàng  </h5>
+                        <h5 class="mb-0">Giỏ hàng - <span class="main-blue-color fw-bold fs-5">@ViewBag.TongSL</span> món hàng  </h5>
                     </div>
 
                     @foreach (var item in Model)
                     {
 
-                        if (item.SanPham != null)
+                        if (item != null)
                         {
                             <div class="card-body">
                                 <!-- Single item -->
@@ -27,7 +31,7 @@
                                     <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                         <!-- Image -->
                                         <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                                            <img src="@item.SanPham.HinhAnh1"
+                                            <img src="@item.HinhAnh1"
                                                  class="w-100" alt="Sản phẩm" />
                                             <a href="#!">
                                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
@@ -38,12 +42,29 @@
 
                                     <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                         <!-- Data -->
-                                        <p><strong>@item.SanPham.TenSanPham</strong></p>
+                                        <p><strong>@item.TenSanPham</strong></p>
 
-                                        <button type="button" class="btn btn-danger btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
-                                                title="Remove item">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-danger btn-sm me-1 mb-2 " data-bs-toggle="modal" data-bs-target="#confirmPopup">
                                             <i class="fas fa-trash"></i>
                                         </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="confirmPopup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered ">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa khỏi giỏ hàng sản phẩm này @item.MaSP</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                                                        <a href="@Url.Action("DeleteFromCart","Cart", new {MaSP = item.MaSP})" class="btn btn-danger">Xóa</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <!-- Data -->
                                     </div>
@@ -52,24 +73,24 @@
                                         <!-- Quantity -->
                                         <div class="d-flex mb-4" style="max-width: 300px">
                                             @*  <button class="btn btn-primary px-3 me-2"
-                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                    <i class="fas fa-minus"></i>
-                                </button>*@
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>*@
 
                                             <div class="form-outline">
-                                                <input id="form1" readonly name="SoLuong" value="@item.SoLuong" type="number" class="form-control" />
+                                                <input id="soLuong" readonly name="SoLuong" value="@item.SoLuong" type="number" class="form-control" />
 
                                             </div>
 
                                             @* <button class="btn btn-primary px-3 ms-2"
-                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                    <i class="fas fa-plus"></i>
-                                </button>*@
+                                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>*@
                                         </div>
                                         <!-- Quantity -->
                                         <!-- Price -->
                                         <p class="text-start text-md-center">
-                                            <strong>@string.Format("{0:N0}", item.SanPham.Gia) đ</strong>
+                                            <strong>@string.Format("{0:N0}", item.Gia) đ</strong>
                                         </p>
                                         <!-- Price -->
 
@@ -81,6 +102,10 @@
 
 
                             </div>
+                        }
+                        else
+                        {
+                            <h1>Bạn chưa thêm sản phẩm nào vào giỏ hàng !</h1>
                         }
 
                     }
@@ -131,16 +156,17 @@
                         </a>
                         <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
 
-                        <form class="mt-4">
+                        @using (Html.BeginForm("Pay", "Cart", FormMethod.Post, new { @class = "mt-4" }))
+                        {
                             <div class="form-outline form-white mb-4">
-                                <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
+                                <input type="text" id="typeName" name="TenKhachHang" value="@tk.TenKhachHang" class="form-control form-control-lg" siez="17"
                                        placeholder="Jason" />
                                 <label class="form-label" for="typeName">Tên chủ thẻ</label>
                             </div>
 
                             <div class="form-outline form-white mb-4">
-                                <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
-                                       placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
+                                <input type="text" id="typeText" class="form-control form-control-lg" size="17"
+                                       placeholder="1234 5678 9012 3457" name="SoThe" value="@tk.SoThe" minlength="19" maxlength="19" />
                                 <label class="form-label" for="typeText">Số thẻ</label>
                             </div>
 
@@ -148,41 +174,40 @@
                                 <div class="col-md-6">
                                     <div class="form-outline form-white">
                                         <input type="text" id="typeExp" class="form-control form-control-lg"
-                                               placeholder="02/2023" size="7" minlength="7" maxlength="7" />
+                                               placeholder="02/2023" size="7" minlength="7" maxlength="7" name="NgayHH" value="@tk.NgayHH" />
                                         <label class="form-label" for="typeExp">Ngày hết hạn</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-outline form-white">
                                         <input type="password" id="CVV" class="form-control form-control-lg"
-                                               placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                                               placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" name="CVV" value="@tk.CVV" />
                                         <label class="form-label" for="CVV">Cvv</label>
                                     </div>
                                 </div>
                             </div>
 
-                        </form>
 
-                        <hr class="my-4">
-
+                            <hr class="my-4">
 
 
-                        <div class="d-flex justify-content-between fw-bolder">
-                            <p class="mb-2">Phí giao hàng</p>
-                            <p class="mb-2">25.000 đ</p>
-                        </div>
 
-                        <div class="d-flex justify-content-between mb-4 fw-bolder">
-                            <p class="mb-2">Tổng cộng ( Đã bao gồm thuế )</p>
-                            <p class="mb-2">@string.Format("{0:N0}", ViewBag.TongTienGioHang) đ</p>
-                        </div>
-
-                        <button type="button" class="btn btn-light btn-lg w-100">
-                            <div class="text-center">
-                                <span class="text-uppercase">Thanh toán ngay <i class="fas fa-long-arrow-alt-right ms-2 main-blue-color"></i></span>
+                            <div class="d-flex justify-content-between fw-bolder">
+                                <p class="mb-2">Phí giao hàng</p>
+                                <p class="mb-2">25.000 đ</p>
                             </div>
-                        </button>
 
+                            <div class="d-flex justify-content-between mb-4 fw-bolder">
+                                <p class="mb-2">Tổng cộng ( Đã bao gồm thuế )</p>
+                                <p class="mb-2">@string.Format("{0:N0}", ViewBag.TongTienGioHang) đ</p>
+                            </div>
+
+                            <button type="submit" class="btn btn-light btn-lg w-100">
+                                <div class="text-center">
+                                    <span class="text-uppercase">Thanh toán ngay <i class="fas fa-long-arrow-alt-right ms-2 main-blue-color"></i></span>
+                                </div>
+                            </button>
+                        }
                     </div>
                 </div>
 

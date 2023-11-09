@@ -12,15 +12,14 @@ namespace Tiki.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BinhLuan
+    public partial class ChiTietDonHang
     {
-        public int MaBinhLuan { get; set; }
-        public Nullable<int> MaKH { get; set; }
-        public Nullable<int> MaSP { get; set; }
-        public string NoiDung { get; set; }
-        public Nullable<System.DateTime> NgayBinhLuan { get; set; }
+        public int MaDonHang { get; set; }
+        public int MaSP { get; set; }
+        public Nullable<short> SoLuong { get; set; }
+        public Nullable<decimal> DonGia { get; set; }
     
-        public virtual KhachHang KhachHang { get; set; }
+        public virtual DonDatHang DonDatHang { get; set; }
         public virtual SanPham SanPham { get; set; }
     }
 }

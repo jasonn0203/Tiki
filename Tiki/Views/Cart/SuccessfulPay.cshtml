@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "SuccessfulPay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    var tk = Session["KhachHang"] as Tiki.Models.KhachHang;
+}
+
+@if (tk != null)
+{
+    <div class="container-fluid row" style="margin-block: 120px;">
+
+        <div class="col-lg-8 d-flex flex-column align-items-center justify-content-center">
+
+            <h1 class="primaryColor fw-bold main-blue-color">Thanh toán thành công !</h1>
+            <div class="d-flex align-items-center  column-gap-4 my-4">
+                <a class="btn btn-primary" href="@Url.Action("Index","Home")">Mua sắm tiếp !</a>
+                <a class="btn btn-danger" href="@Url.Action("Bills","User",new {name = tk.TenKhachHang})">Quản lý đơn </a>
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+            <img style="width: 100%" class="object-fit-cover rounded-4" src="https://cdn.dribbble.com/users/4626561/screenshots/12233454/media/ac27f201d558b0cbe41513f97146a80e.png" alt="Alternate Text" />
+
+        </div>
+
+    </div>
+}
+
+
+

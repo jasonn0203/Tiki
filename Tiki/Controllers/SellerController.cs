@@ -11,7 +11,7 @@ namespace Tiki.Controllers
 {
     public class SellerController : Controller
     {
-        readonly TikiDatabase db = new TikiDatabase();
+        readonly TikiEntities db = new TikiEntities();
 
 
         // GET: Seller
@@ -24,9 +24,11 @@ namespace Tiki.Controllers
             ViewBag.IsLoading = true;
 
             var maNCC = ((NhaCungCap)Session["NhaCungCap"]).MaNCC;
-            int spCount = 0;
 
+            int spCount = 0;
             spCount = db.SanPhams.Count(c => c.MaNCC == maNCC);
+
+      
 
             ViewBag.SoLuongSP = spCount;
             ViewBag.Tab = "Dashboard";
@@ -63,7 +65,7 @@ namespace Tiki.Controllers
         public ActionResult SellerSignUp(NhaCungCap ncc)
         {
             //KT trường hợp trùng email đky tồn tại trong db
-            var checkUniqueEmail = db.NhaCungCaps.FirstOrDefault(n => n.Email.Equals(n.Email));
+            var checkUniqueEmail = db.NhaCungCaps.FirstOrDefault(n => n.Email.Equals(ncc.Email));
 
             if (ModelState.IsValid)
             {
