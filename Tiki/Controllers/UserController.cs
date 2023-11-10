@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -103,18 +104,44 @@ namespace Tiki.Controllers
 
 
 
-        public ActionResult Invoices()
+        public ActionResult Invoices(int MaDH, int maKH)
         {
-            return View();
+
+            var orderDetails = db.ChiTietDonHangs
+                .Where(ct => ct.MaDonHang == MaDH && ct.DonDatHang.MaKH == maKH)
+                .Include(ct => ct.SanPham)
+                .ToList();
+
+            // Calculate the total value of the order
+            decimal totalValue = (decimal)orderDetails.Sum(ct => ct.SoLuong * ct.DonGia);
+
+            int maDH = orderDetails.FirstOrDefault().MaDonHang;
+            DateTime ngayTaoDon = (DateTime)orderDetails.FirstOrDefault().DonDatHang.NgayDat;
+
+            // Save the total value in ViewBag
+            ViewBag.TongTienHoaDon = totalValue;
+            ViewBag.MaDonHang = MaDH;
+            ViewBag.NgayTaoDon = ngayTaoDon;
+
+
+            return View(orderDetails);
         }
+
+
+
+
+
 
         public ActionResult General(string tenKH)
         {
-            // Lấy danh sách các phòng thuộc mã chủ nhà
-          
 
+            // Lấy danh sách các đơn hàng theo TenKH
+            var donHangList = db.DonDatHangs
+                .Where(dh => dh.KhachHang.TenKhachHang == tenKH)
+                .ToList();
 
-            return View();
+            return View(donHangList);
         }
+
     }
 }

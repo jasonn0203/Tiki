@@ -3,7 +3,7 @@
 
 
 @{
-    ViewBag.Title = "Checkout";
+    ViewBag.Title = "Giỏ hàng của bạn";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
@@ -16,125 +16,132 @@
         <div class="row d-flex justify-content-center my-4">
             <div class="col-md-8">
                 <div class="card mb-4">
-                    <div class="card-header py-3">
-                        <h5 class="mb-0">Giỏ hàng - <span class="main-blue-color fw-bold fs-5">@ViewBag.TongSL</span> món hàng  </h5>
+                    <div class="card-header d-flex justify-content-between align-items-center py-3">
+                        <h5 class="mb-0">Giỏ hàng - <span class="main-blue-color fw-bold fs-5">@ViewBag.TongSL</span> món hàng</h5>
+                        @if (Model.Any())
+                        {
+                            <a href="@Url.Action("DeleteAllFromCart", "Cart")" class="btn btn-danger text-decoration-none text-white" style="color: #aeaeae">
+                                <i class="fas fa-trash"></i> Xóa tất cả
+                            </a>
+                        }
                     </div>
 
-                    @foreach (var item in Model)
+                    @if (Model.Any())
                     {
-
-                        if (item != null)
+                        foreach (var item in Model)
                         {
-                            <div class="card-body">
-                                <!-- Single item -->
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                                        <!-- Image -->
-                                        <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                                            <img src="@item.HinhAnh1"
-                                                 class="w-100" alt="Sản phẩm" />
-                                            <a href="#!">
-                                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
-                                            </a>
+                            if (item != null)
+                            {
+                                <div class="card-body">
+                                    <!-- Single item -->
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                            <!-- Image -->
+                                            <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                                                <img src="@item.HinhAnh1" class="w-100" alt="Sản phẩm" />
+                                                <a href="#!">
+                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                                                </a>
+                                            </div>
+                                            <!-- Image -->
                                         </div>
-                                        <!-- Image -->
-                                    </div>
 
-                                    <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                                        <!-- Data -->
-                                        <p><strong>@item.TenSanPham</strong></p>
+                                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                            <!-- Data -->
+                                            <p><strong>@item.TenSanPham</strong></p>
 
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-danger btn-sm me-1 mb-2 " data-bs-toggle="modal" data-bs-target="#confirmPopup">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                            <!-- Button trigger modal -->
+                                            <button data-bs-toggle="modal" data-bs-target="#confirmPopup_@item.MaSP" type="button" class="btn btn-danger btn-sm me-1 mb-2">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="confirmPopup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered ">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa khỏi giỏ hàng sản phẩm này @item.MaSP</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="confirmPopup_@item.MaSP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered ">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa khỏi giỏ hàng sản phẩm này</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
 
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-                                                        <a href="@Url.Action("DeleteFromCart","Cart", new {MaSP = item.MaSP})" class="btn btn-danger">Xóa</a>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                                                            <a href="@Url.Action("DeleteFromCart", "Cart", new { @MaSP = item.MaSP })" class="btn btn-danger text-decoration-none text-white" style="color: #aeaeae">
+                                                                Xóa
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- Data -->
                                         </div>
 
-                                        <!-- Data -->
-                                    </div>
+                                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                            @using (Html.BeginForm("UpdateCartQuantity", "Cart", new { maSP = item.MaSP }))
+                                            {
+                                                <button type="submit" class="btn btn-dark border-0 bg-main-blue btn-sm me-1 mb-2">
+                                                    <i class="fa-solid fa-rotate fa-spin-pulse"></i>
+                                                    Cập nhật
+                                                </button>
 
-                                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                        <!-- Quantity -->
-                                        <div class="d-flex mb-4" style="max-width: 300px">
-                                            @*  <button class="btn btn-primary px-3 me-2"
-                                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>*@
+                                                <!-- Quantity -->
+                                                <div class="d-flex mb-4" style="max-width: 300px">
+                                                    <button type="button" class="btn btn-primary px-3 me-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
 
-                                            <div class="form-outline">
-                                                <input id="soLuong" readonly name="SoLuong" value="@item.SoLuong" type="number" class="form-control" />
+                                                    <div class="form-outline">
+                                                        <input id="soLuong" readonly min="1" max="15" name="soLuong" value="@item.SoLuong" type="number" class="form-control" />
+                                                    </div>
 
-                                            </div>
+                                                    <button type="button" class="btn btn-primary px-3 ms-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            }
 
-                                            @* <button class="btn btn-primary px-3 ms-2"
-                                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>*@
+                                            <!-- Quantity -->
+                                            <!-- Price -->
+                                            <p class="text-start text-md-center">
+                                                <strong>@string.Format("{0:N0}", item.Gia) đ</strong>
+                                            </p>
+                                            <!-- Price -->
                                         </div>
-                                        <!-- Quantity -->
-                                        <!-- Price -->
-                                        <p class="text-start text-md-center">
-                                            <strong>@string.Format("{0:N0}", item.Gia) đ</strong>
-                                        </p>
-                                        <!-- Price -->
-
                                     </div>
+                                    <!-- Single item -->
+                                    <hr class="my-4" />
                                 </div>
-                                <!-- Single item -->
-
-                                <hr class="my-4" />
-
-
-                            </div>
+                            }
                         }
-                        else
-                        {
-                            <h1>Bạn chưa thêm sản phẩm nào vào giỏ hàng !</h1>
-                        }
-
                     }
-
+                    else
+                    {
+                        <div class="card-body my-5">
+                            <h2 class="text-danger fw-bold">Bạn chưa thêm sản phẩm nào vào giỏ hàng!</h2>
+                        </div>
+                    }
                 </div>
+
                 <div class="card mb-4">
                     <div class="card-body d-flex align-items-center">
                         <strong>Giao hàng dự kiến :</strong>
                         <p id="delivery-date" class="mb-0 ms-2 main-blue-color"></p>
                     </div>
                 </div>
+
                 <div class="card mb-4 mb-lg-0">
                     <div class="card-body">
                         <p><strong>Các loại thẻ chấp nhận</strong></p>
-                        <img class="me-2" width="45"
-                             src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                             alt="Visa" />
-                        <img class="me-2" width="45"
-                             src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                             alt="American Express" />
-                        <img class="me-2" width="45"
-                             src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                             alt="Mastercard" />
-
+                        <img class="me-2" width="45" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa" />
+                        <img class="me-2" width="45" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg" alt="American Express" />
+                        <img class="me-2" width="45" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard" />
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
 
+
+            <div class="col-md-4">
 
                 <div class="card bg-primary text-white rounded-3">
                     <div class="card-body">
@@ -159,13 +166,13 @@
                         @using (Html.BeginForm("Pay", "Cart", FormMethod.Post, new { @class = "mt-4" }))
                         {
                             <div class="form-outline form-white mb-4">
-                                <input type="text" id="typeName" name="TenKhachHang" value="@tk.TenKhachHang" class="form-control form-control-lg" siez="17"
+                                <input type="text" id="typeName" name="TenKhachHang" readonly value="@tk.TenKhachHang" class="form-control form-control-lg" siez="17"
                                        placeholder="Jason" />
                                 <label class="form-label" for="typeName">Tên chủ thẻ</label>
                             </div>
 
                             <div class="form-outline form-white mb-4">
-                                <input type="text" id="typeText" class="form-control form-control-lg" size="17"
+                                <input type="number"  id="typeText" class="form-control form-control-lg"
                                        placeholder="1234 5678 9012 3457" name="SoThe" value="@tk.SoThe" minlength="19" maxlength="19" />
                                 <label class="form-label" for="typeText">Số thẻ</label>
                             </div>
@@ -173,14 +180,14 @@
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <div class="form-outline form-white">
-                                        <input type="text" id="typeExp" class="form-control form-control-lg"
+                                        <input type="date"  id="typeExp" class="form-control form-control-lg"
                                                placeholder="02/2023" size="7" minlength="7" maxlength="7" name="NgayHH" value="@tk.NgayHH" />
                                         <label class="form-label" for="typeExp">Ngày hết hạn</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-outline form-white">
-                                        <input type="password" id="CVV" class="form-control form-control-lg"
+                                        <input type="password"  id="CVV" class="form-control form-control-lg"
                                                placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" name="CVV" value="@tk.CVV" />
                                         <label class="form-label" for="CVV">Cvv</label>
                                     </div>
@@ -190,23 +197,36 @@
 
                             <hr class="my-4">
 
+                            if (Model.Any())
+                            {
 
-
-                            <div class="d-flex justify-content-between fw-bolder">
-                                <p class="mb-2">Phí giao hàng</p>
-                                <p class="mb-2">25.000 đ</p>
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-4 fw-bolder">
-                                <p class="mb-2">Tổng cộng ( Đã bao gồm thuế )</p>
-                                <p class="mb-2">@string.Format("{0:N0}", ViewBag.TongTienGioHang) đ</p>
-                            </div>
-
-                            <button type="submit" class="btn btn-light btn-lg w-100">
-                                <div class="text-center">
-                                    <span class="text-uppercase">Thanh toán ngay <i class="fas fa-long-arrow-alt-right ms-2 main-blue-color"></i></span>
+                                <div class="d-flex justify-content-between fw-bolder">
+                                    <p class="mb-2">Phí giao hàng</p>
+                                    <p class="mb-2">25.000 đ</p>
                                 </div>
-                            </button>
+
+                                <div class="d-flex justify-content-between mb-4 fw-bolder">
+                                    <p class="mb-2">Tổng cộng ( Đã bao gồm thuế )</p>
+                                    <p class="mb-2">@string.Format("{0:N0}", ViewBag.TongTienGioHang) đ</p>
+                                </div>
+
+
+                                <button type="submit" class="btn btn-light btn-lg w-100">
+                                    <div class="text-center">
+                                        <span class="text-uppercase">Thanh toán ngay <i class="fas fa-long-arrow-alt-right ms-2 main-blue-color"></i></span>
+                                    </div>
+                                </button>
+
+                            }
+                            else
+                            {
+                                <button disabled type="submit" class="btn btn-light btn-lg w-100">
+                                    <div class="text-center">
+                                        <span class="text-uppercase">Thêm sản phẩm vào giỏ hàng để thanh toán</span>
+                                    </div>
+                                </button>
+                            }
+
                         }
                     </div>
                 </div>

@@ -23,7 +23,8 @@ namespace Tiki.Models
         public int MaDonHang { get; set; }
         public Nullable<int> MaKH { get; set; }
         public Nullable<System.DateTime> NgayDat { get; set; }
-    
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual KhachHang KhachHang { get; set; }

@@ -18,7 +18,7 @@
             <h1 class="primaryColor fw-bold main-blue-color">Thanh toán thành công !</h1>
             <div class="d-flex align-items-center  column-gap-4 my-4">
                 <a class="btn btn-primary" href="@Url.Action("Index","Home")">Mua sắm tiếp !</a>
-                <a class="btn btn-danger" href="@Url.Action("Bills","User",new {name = tk.TenKhachHang})">Quản lý đơn </a>
+                <a class="btn btn-danger" href="@Url.Action("General","User",new {tenKH = tk.TenKhachHang})">Quản lý đơn </a>
             </div>
 
         </div>

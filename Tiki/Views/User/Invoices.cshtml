@@ -1,17 +1,27 @@
-﻿
+﻿@using Tiki.Models
+
 @{
     ViewBag.Title = "Invoices";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+@{
+    var tk = Session["KhachHang"] as Tiki.Models.KhachHang;
+}
+
 <div class="card">
+
     <div class="card-body">
         <div class="container mb-5 mt-3">
             <div class="row d-flex align-items-baseline">
                 <div class="col-xl-9">
                     <p class="d-flex align-items-center gap-1" style="color: #7e8d9f;font-size: 20px;">
                         <i class="fa-solid fa-receipt"></i> Hóa Đơn >
-                        <span class="fw-bolder">ID: #123-123</span>
+
+
+                        <span class="fw-bolder">ID: #@ViewBag.MaDonHang</span>
+
                     </p>
                 </div>
                 <div class="col-xl-3 float-end">
@@ -40,22 +50,21 @@
                     <div class="col-xl-8">
                         <ul class="list-unstyled">
                             @*TÊN KH*@
-                            <li class="text-muted">Tới : <span class="main-blue-color">John Lorem</span></li>
+                            <li class="text-muted">Tới : <span class="main-blue-color">@tk.TenKhachHang</span></li>
                             @*ĐỊA CHỈ*@
-                            <li class="text-muted">Địa chỉ : Street, City</li>
+                            <li class="text-muted">Địa chỉ : @tk.DiaChi</li>
 
                             @* SĐT *@
-                            <li class="text-muted"><i class="fas fa-phone"></i> 123-456-789</li>
+                            <li class="text-muted"><i class="fas fa-phone"></i> @tk.SoDienThoai</li>
                         </ul>
                     </div>
                     <div class="col-xl-4">
                         <p class="text-muted">
                             Chi tiết hóa đơn
                             <ul class="list-unstyled">
-                              
+
                                 <li class="text-muted">
-                                    <i class="fas fa-circle" style="color: #0a68ff;"></i> <span class="fw-bold">Ngày tạo: </span>Jun 23,2021
-                                </li>
+                                    <i class="fas fa-circle" style="color: #0a68ff;"></i> <span class="fw-bold">Ngày tạo: @ViewBag.NgayTaoDon</span>
                                 <li class="text-muted">
                                     <i class="fas fa-circle" style="color: #0a68ff;"></i> <span class="me-1 fw-bold">Trạng thái:</span><span class="badge bg-main-blue text-white fw-bold">
                                         Đặt thành công
@@ -77,20 +86,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Pro Package</td>
-                                <td>4</td>
-                                <td>$200</td>
-                                <td>$800</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Web hosting</td>
-                                <td>1</td>
-                                <td>$10</td>
-                                <td>$10</td>
-                            </tr>
+                            @{
+                                int indexSP = 1; // Initialize the index variable
+                            }
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@indexSP</th>
+                                    <td>@item.SanPham.TenSanPham</td>
+                                    <td>@item.SoLuong</td>
+                                    <td>@string.Format("{0:N0}", item.DonGia) đ</td>
+                                    <td>@string.Format("{0:N0}", item.SoLuong * item.DonGia) đ</td>
+                                </tr>
+                                indexSP++;
+                            }
 
                         </tbody>
 
@@ -104,14 +113,14 @@
                     <div class="col-xl-3">
 
                         <p class="text-black float-start">
-                            <span class="text-black me-3"> Tổng cộng </span><span style="font-size: 25px;">$1221</span>
+                            <span class="text-black me-3"> Tổng cộng </span><span class="main-blue-color fw-bold" style="font-size: 25px;">@string.Format("{0:N0}", ViewBag.TongTienHoaDon) đ</span>
                         </p>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-12">
-                        <p>Cảm ơn đã tin dùng hàng ở Tiki</p>
+                        <p>Cảm ơn đã tin dùng sản phẩm ở Tiki</p>
                     </div>
 
                 </div>

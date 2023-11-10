@@ -1,4 +1,5 @@
-﻿
+﻿@using Tiki.Models
+@model IEnumerable<DonDatHang>
 
 @{
     ViewBag.Title = "General";
@@ -35,8 +36,8 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Đơn hàng đặt lúc <span class="text-muted">@item.NgayDat</span></h5>
-                        <p class="card-text">@item.TongGiaTri <sup>đ</sup></p>
-                        <a href="@Url.Action("Invoices", "User")" class="btn btn-primary">Xem hóa đơn</a>
+
+                        <a href="@Url.Action("Invoices", "User",new {maDH = item.MaDonHang, maKH = item.MaKH})" class="btn btn-primary">Xem hóa đơn</a>
                         <a href="#!" class="btn btn-danger">Hủy đơn hàng</a>
                     </div>
                 </div>

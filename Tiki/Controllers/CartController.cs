@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -89,7 +90,97 @@ namespace Tiki.Controllers
             return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
         }
 
+        public ActionResult DeleteAllFromCart()
+        {
+            List<GioHang> gioHang = GetGioHang();
 
+            gioHang.Clear();
+
+            return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
+        }
+
+        public ActionResult UpdateCartQuantity(int maSP, FormCollection form)
+        {
+            List<GioHang> gioHang = GetGioHang();
+
+            var sanpham = gioHang.SingleOrDefault(sp => sp.MaSP == maSP);
+            //Ktra nếu có sp thì mới đc sửa sluong
+            if (sanpham != null)
+            {
+                sanpham.SoLuong = short.Parse(form["soLuong"].ToString());
+            }
+
+            return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
+
+
+        }
+
+        public ActionResult Pay()
+        {
+            KhachHang kh = Session["KhachHang"] as KhachHang;
+            if (kh == null)
+            {
+                return RedirectToAction("SignIn", "User");
+            }
+
+            // Lấy giỏ hàng hiện tại
+            List<GioHang> gioHang = GetGioHang();
+
+
+            // Tạo đơn đặt hàng
+            DonDatHang donDatHang = new DonDatHang();
+            donDatHang.MaKH = kh.MaKH;
+            donDatHang.NgayDat = DateTime.Now;
+
+
+
+
+            db.DonDatHangs.Add(donDatHang);
+            db.SaveChanges();
+
+            // Lưu vào chi tiết đơn hàng
+            foreach (var sp in gioHang)
+            {
+                ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
+                chiTietDonHang.MaDonHang = donDatHang.MaDonHang;
+                chiTietDonHang.MaSP = sp.MaSP;
+                chiTietDonHang.SoLuong = sp.SoLuong;
+                chiTietDonHang.DonGia = sp.Gia;
+                db.ChiTietDonHangs.Add(chiTietDonHang);
+            }
+
+            kh.DaThanhToan = true;
+            db.SaveChanges();
+
+
+
+            // Xóa giỏ hàng
+            Session["GioHang"] = null;
+
+            return RedirectToAction("SuccessfulPay");
+        }
+
+
+
+        public ActionResult SuccessfulPay()
+        {
+            KhachHang kh = Session["KhachHang"] as KhachHang;
+
+            if (kh != null && kh.DaThanhToan)
+            {
+                // Nếu khách hàng đã thanh toán, cho phép truy cập trang
+                return View();
+            }
+            else
+            {
+                // Khách hàng chưa thanh toán, chuyển hướng hoặc hiển thị thông báo không cho phép truy cập
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+
+        //------------------------------------------------------------------------------------------------------
         private int TinhTongSL()
         {
             int tongSL = 0;
@@ -111,42 +202,6 @@ namespace Tiki.Controllers
         }
 
 
-        /* private int TinhTongSLCart(int maKH)
-         {
-             var cartQuantity = db.GioHangs.Count(item => item.MaKH == maKH);
-
-             return cartQuantity;
-         }*/
-
-
-
-        /*     private decimal TinhTongTien(int maKH)
-             {
-                 //Lấy giỏ hàng
-                 var cartItems = db.GioHangs.Where(g => g.MaKH == maKH).ToList();
-
-                 decimal totalPrice = 0;
-                 decimal shipPrice = 25000;
-
-                 // Lặp qua các item trong giỏ hàng
-                 foreach (var cartItem in cartItems)
-                 {
-                     // Get giá SP
-                     decimal productPrice = (decimal)db.SanPhams.Find(cartItem.MaSP).Gia;
-
-                     // Tính tổng giá từng item
-                     decimal subtotal = (decimal)(productPrice * cartItem.SoLuong);
-
-                     // Cộng tổng giá từng item vào tổng tiền
-                     totalPrice += subtotal;
-                 }
-
-                 // Cộng thêm phí ship 
-                 totalPrice += shipPrice;
-
-                 return totalPrice;
-             }*/
-
 
 
         public ActionResult CartPartial(int maKH)
@@ -156,18 +211,11 @@ namespace Tiki.Controllers
         }
 
 
-        public ActionResult Pay()
-        {
-            return View();
-        }
 
 
 
 
-        public ActionResult SuccessfulPay()
-        {
 
-            return View();
-        }
+
     }
 }
