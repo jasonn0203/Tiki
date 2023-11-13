@@ -7,10 +7,31 @@
 }
 
 
+<style>
+    .main-hover.active {
+        background-color: #0a68ff;
+        color: white!important;
+        border-radius: 8px;
+    }
+</style>
+
 <div class="d-flex flex-column flex-lg-row py-4 justify-content-between gap-2 my-2 my-md-0">
 
     <div class="col-lg-2  bg-white rounded-4 p-4">
-        HI
+        @*SORT*@
+        <div class="d-flex flex-md-column row-gap-2">
+            <a class="text-decoration-none text-dark p-2 main-hover @(ViewBag.PriceAsc == true ? "active" : "")" href="@Url.Action("ProductByCategory", "Home", new { sortOrder = "PriceAsc", tenPL = ViewBag.TenPL })">
+                <i class="fa-solid fa-arrow-up-9-1"></i>
+                Giá tăng dần
+            </a>
+
+            <a class="text-decoration-none text-dark my-2 p-2 my-md-0 main-hover  @(ViewBag.PriceDesc == true ? "active" : "")" href="@Url.Action("ProductByCategory", "Home", new { sortOrder = "PriceDesc", tenPL = ViewBag.TenPL })">
+                <i class="fa-solid fa-arrow-down-1-9"></i>
+                Giá giảm dần
+            </a>
+        </div>
+
+
     </div>
 
     <div class="col-lg-10 bg-white rounded-4 p-4 ms">
