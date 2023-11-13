@@ -40,7 +40,7 @@
                                             <label for="selectAll"></label>
                                         </span>
                                     </th>
-                                    <th>Tên SP</th>
+                                    <th>Tên Sản phẩm</th>
                                     <th>Loại</th>
                                     <th>Giá</th>
                                     <th>Thumbnail</th>
@@ -70,7 +70,7 @@
                                             <td>@item.PhanLoaiSP.TenPhanLoai</td>
                                             <td>@string.Format("{0:N0} đ", item.Gia)</td>
                                             <td>
-                                                <img src="@item.HinhAnh1" width="50" height="50" class="img-fluid" />
+                                                <img src="@item.HinhAnh1" width="60" height="50" class="img-fluid rounded-2" />
                                             </td>
                                             <td>
                                                 <a href="@Url.Action("EditProduct","Seller", new {maSP = item.MaSP})">

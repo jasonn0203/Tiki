@@ -25,11 +25,20 @@ namespace Tiki.Controllers
 
             var maNCC = ((NhaCungCap)Session["NhaCungCap"]).MaNCC;
 
+            //Số sp đăng bán
             int spCount = 0;
             spCount = db.SanPhams.Count(c => c.MaNCC == maNCC);
 
-      
 
+            //Số SP đã bán
+            var totalQuantitySoldBySupplier = db.ChiTietDonHangs
+                    .Where(ct => ct.SanPham.MaNCC == maNCC)
+                    .GroupBy(ct => ct.SanPham.MaNCC)
+                    .Select(group => group.Count());
+
+
+
+            ViewBag.SoLuongBan = totalQuantitySoldBySupplier.Count();
             ViewBag.SoLuongSP = spCount;
             ViewBag.Tab = "Dashboard";
             ViewBag.IsLoading = false;
@@ -47,7 +56,27 @@ namespace Tiki.Controllers
             }
             ViewBag.Tab = "Management";
 
-            return View();
+            var maNCC = ((NhaCungCap)Session["NhaCungCap"]).MaNCC;
+
+            //Doanh thu theo sản phẩm ( Tạo thêm 1 class để chứa thông tin )
+            var doanhThuTheoSanPham = db.ChiTietDonHangs
+                .Include(ct => ct.SanPham)
+                .Where(ct => ct.SanPham.MaNCC == maNCC)
+                .Select(ct => new DoanhThuTheoSanPham
+                {
+                    NgayBan = (DateTime)ct.DonDatHang.NgayDat,
+                    IDDonHang = ct.MaDonHang,
+                    TenSanPham = ct.SanPham.TenSanPham,
+                    Gia = (decimal)ct.DonGia,
+                    SoLuong = (short)ct.SoLuong,
+                    TongCong = (decimal)(ct.DonGia * ct.SoLuong)
+                })
+                .ToList();
+
+
+
+
+            return View(doanhThuTheoSanPham);
         }
 
 
@@ -259,6 +288,29 @@ namespace Tiki.Controllers
             ViewBag.PhanLoaiList = new SelectList(db.PhanLoaiSPs, "MaPhanLoai", "TenPhanLoai");
             return View(sanPham);
         }
+
+
+        //public ActionResult SalesReportByProduct(int maNCC)
+        //{
+        //    using (var context = new TikiEntities()) 
+        //    {
+        //        var salesData = context.ChiTietDonHangs
+        //     .Where(ct => ct.DonDatHang.KhachHang.SanPham.MaNCC == maNCC)
+        //     .Select(ct => new
+        //     {
+        //         NgayBan = ct.DonDatHang.NgayDat,
+        //         MaDonHang = ct.MaDonHang,
+        //         TenSanPham = ct.SanPham.TenSanPham,
+        //         Gia = ct.DonGia,
+        //         SoLuong = ct.SoLuong,
+        //         TongCong = ct.DonGia * ct.SoLuong
+        //     })
+        //     .ToList();
+
+        //        return View(salesData);
+        //    }
+        //}
+
 
     }
 

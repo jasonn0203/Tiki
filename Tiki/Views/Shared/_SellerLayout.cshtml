@@ -43,11 +43,8 @@
                                 <i class="fa-solid fa-bars-progress   @(ViewBag.Tab == "Management" ? "fa-spin" : "")"></i>Quản lý chung
                             </a>
                         </li>
-                        <li class="@(ViewBag.Tab == "" ? "active" : "")">
-                            <a class="text-decoration-none" href="chart.html">
-                                <i class="fas fa-chart-bar "></i>Biểu đồ
-                            </a>
-                        </li>
+
+
                         <li class="@(ViewBag.Tab == "ProductList" ? "active" : "")">
                             <a class="text-decoration-none" href="@Url.Action("ProductList","Seller")">
                                 <i class="fas fa-table  @(ViewBag.Tab == "ProductList" ? "fa-spin" : "")"></i>Danh sách sản phẩm

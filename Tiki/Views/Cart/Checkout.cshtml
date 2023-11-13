@@ -80,14 +80,14 @@
                                         <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                             @using (Html.BeginForm("UpdateCartQuantity", "Cart", new { maSP = item.MaSP }))
                                             {
-                                                <button type="submit" class="btn btn-dark border-0 bg-main-blue btn-sm me-1 mb-2">
+                                                @*<button class="btn btn-dark border-0 bg-main-blue btn-sm me-1 mb-2">
                                                     <i class="fa-solid fa-rotate fa-spin-pulse"></i>
                                                     Cập nhật
-                                                </button>
+                                                </button>*@
 
                                                 <!-- Quantity -->
                                                 <div class="d-flex mb-4" style="max-width: 300px">
-                                                    <button type="button" class="btn btn-primary px-3 me-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                    <button type="submit" class="btn btn-primary px-3 me-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                         <i class="fas fa-minus"></i>
                                                     </button>
 
@@ -95,7 +95,7 @@
                                                         <input id="soLuong" readonly min="1" max="15" name="soLuong" value="@item.SoLuong" type="number" class="form-control" />
                                                     </div>
 
-                                                    <button type="button" class="btn btn-primary px-3 ms-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                    <button type="submit" class="btn btn-primary px-3 ms-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </div>

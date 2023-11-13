@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Tiki.Models;
@@ -109,7 +110,8 @@ namespace Tiki.Controllers
             {
                 sanpham.SoLuong = short.Parse(form["soLuong"].ToString());
             }
-
+            //Delay 0.75s
+            Thread.Sleep(750);
             return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
 
 

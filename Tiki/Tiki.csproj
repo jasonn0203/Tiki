@@ -149,6 +149,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataModel.cs" />
+    <Compile Include="Models\DoanhThuTheoSanPham.cs" />
     <Compile Include="Models\DonDatHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
