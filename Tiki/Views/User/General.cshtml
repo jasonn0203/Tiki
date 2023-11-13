@@ -1,5 +1,5 @@
 ﻿@using Tiki.Models
-@model IEnumerable<DonDatHang>
+
 
 @{
     ViewBag.Title = "General";
@@ -11,9 +11,7 @@
     <li class="nav-item border-end" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false">Đơn hàng</button>
     </li>
-    <li class="nav-item border-end" role="presentation">
-        <button class="nav-link" id="pills-comments-tab" data-bs-toggle="pill" data-bs-target="#pills-comments" type="button" role="tab" aria-controls="pills-comments" aria-selected="false">Lịch sử đánh giá</button>
-    </li>
+
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Thông tin tài khoản</button>
     </li>
@@ -25,7 +23,7 @@
     <div class="tab-pane fade show active " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
         <div class="container d-flex flex-column flex-md-row align-items-center gap-2">
 
-            @foreach (var item in Model)
+            @foreach (var item in ViewBag.DonHangList)
             {
                 <div class="card  flex-md-row  align-items-center" style="width: fit-content">
                     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
@@ -37,8 +35,28 @@
                     <div class="card-body">
                         <h5 class="card-title">Đơn hàng đặt lúc <span class="text-muted">@item.NgayDat</span></h5>
 
-                        <a href="@Url.Action("Invoices", "User",new {maDH = item.MaDonHang, maKH = item.MaKH})" class="btn btn-primary">Xem hóa đơn</a>
-                        <a href="#!" class="btn btn-danger">Hủy đơn hàng</a>
+                        <a href="@Url.Action("Invoices", "User",new {maDH = item.MaDonHang, tenKH = item.KhachHang.TenKhachHang})" class="btn btn-primary">Xem hóa đơn</a>
+
+                        <a data-bs-toggle="modal" data-bs-target="#confirmPopup_@item.MaDonHang" class="btn btn-danger">
+                            Hủy đơn hàng
+                        </a>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="confirmPopup_@item.MaDonHang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered ">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn hủy đơn hàng này?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                                        <a href="@Url.Action("RemoveOrder", "User",new { maDH = item.MaDonHang, tenKH = item.KhachHang.TenKhachHang})" class="btn btn-danger">Hủy đơn hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
@@ -48,8 +66,6 @@
 
 
 
-    <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab">123</div>
-
 
 
     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -58,7 +74,11 @@
             <div class="card-body p-4 p-md-5">
                 <h3 class="mb-4 pb-2">Thông tin cá nhân của bạn</h3>
 
-                <form action="">
+
+
+
+                @using (Html.BeginForm("UpdateCustomerInfo", "User", FormMethod.Post))
+                {
 
                     <div class="row">
                         <div class="col-md-6 mb-4">
@@ -66,7 +86,7 @@
                             <div class="form-outline">
                                 <i class="fas fa-user fa-lg me-1 fa-fw"></i>
                                 <label class="form-label" for="name">Tên</label>
-                                <input type="text" id="name" class="form-control  form-control-lg" />
+                                <input type="text" id="name" required name="TenKhachHang" value="@Model.TenKhachHang" class="form-control  form-control-lg" />
                             </div>
 
                         </div>
@@ -75,7 +95,7 @@
                             <div class="form-outline">
                                 <i class="fa-solid fa-lg fa-fw me-1 fa-location-dot"></i>
                                 <label class="form-label" for="address">Địa chỉ</label>
-                                <input type="text" id="address" class="form-control  form-control-lg" />
+                                <input type="text" id="address" required name="DiaChi" value="@Model.DiaChi" class="form-control  form-control-lg" />
                             </div>
 
                         </div>
@@ -88,7 +108,7 @@
                             <div class="form-outline">
                                 <i class="fas fa-envelope fa-lg me-1 fa-fw"></i>
                                 <label class="form-label" for="emailAddress">Email</label>
-                                <input type="email" id="emailAddress" class="form-control  form-control-lg" />
+                                <input type="email" id="emailAddress" required readonly value="@Model.Email" name="Email" class="form-control  form-control-lg" />
                             </div>
 
                         </div>
@@ -97,7 +117,7 @@
                             <div class="form-outline">
                                 <i class="fa-solid fa-lg fa-fw me-1 fa-phone"></i>
                                 <label class="form-label" for="phoneNumber">Số điện thoại</label>
-                                <input type="tel" id="phoneNumber" class="form-control  form-control-lg" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                <input type="tel" id="phoneNumber" name="SoDienThoai" value="@Model.SoDienThoai" required class="form-control  form-control-lg" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                             </div>
 
 
@@ -111,29 +131,32 @@
                             <div class="form-outline">
                                 <i class="fa-solid fa-credit-card"></i>
                                 <label class="form-label" for="typeText">Số thẻ</label>
-                                <input type="text" id="typeText" class="form-control form-control-lg" size="17"
-                                       placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
-                            </div>
 
+                                <input type="text" id="typeText" class="form-control form-control-lg"
+                                       placeholder="1234 5678 9012 3457" minlength="16" maxlength="19" name="SoThe" value="@Model.SoThe" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+
+
+
+                            </div>
                         </div>
-                        <div class="col-md-5 mb-4">
+                        <div class="col-md-4 mb-4">
 
                             <div class="form-outline">
                                 <i class="fa-regular fa-calendar-xmark"></i>
                                 <label class="form-label" for="expirationDate">Ngày hết hạn</label>
-                                <input type="text" id="expirationDate" class="form-control form-control-lg"
+                                <input type="text" id="expirationDate" class="form-control form-control-lg" name="NgayHH" value="@Model.NgayHH"
                                        placeholder="05/2023" size="7" minlength="7" maxlength="7" oninput="formatExpirationDate(this)" />
                             </div>
 
 
                         </div>
 
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <div class="form-outline form-white">
                                 <i class="fa-brands fa-css3-alt"></i>
                                 <label class="form-label" for="CVV">Cvv</label>
-                                <input type="password" id="CVV" class="form-control form-control-lg"
-                                       placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
+                                <input type="password" id="CVV" class="form-control form-control-lg" name="CVV" value="@Model.CVV"
+                                       placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" min="100" max="999" maxlength="3" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                             </div>
                         </div>
                     </div>
@@ -141,7 +164,7 @@
                         <input class="btn btn-primary bg-main-blue btn-lg" type="submit" value="Cập nhật" />
                     </div>
 
-                </form>
+                }
             </div>
         </div>
     </div>

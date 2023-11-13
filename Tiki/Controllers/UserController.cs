@@ -104,11 +104,11 @@ namespace Tiki.Controllers
 
 
 
-        public ActionResult Invoices(int MaDH, int maKH)
+        public ActionResult Invoices(int MaDH, string tenKH)
         {
 
             var orderDetails = db.ChiTietDonHangs
-                .Where(ct => ct.MaDonHang == MaDH && ct.DonDatHang.MaKH == maKH)
+                .Where(ct => ct.MaDonHang == MaDH && ct.DonDatHang.KhachHang.TenKhachHang == tenKH)
                 .Include(ct => ct.SanPham)
                 .ToList();
 
@@ -122,12 +122,39 @@ namespace Tiki.Controllers
             ViewBag.TongTienHoaDon = totalValue;
             ViewBag.MaDonHang = MaDH;
             ViewBag.NgayTaoDon = ngayTaoDon;
+            if (orderDetails != null)
+            {
+                return View(orderDetails);
 
+            }
+            else
+            {
+                return View("Home", "Index");
+            }
 
-            return View(orderDetails);
         }
 
+        public ActionResult RemoveOrder(int maDH, string tenKH)
+        {
+            var orderToRemove = db.DonDatHangs
+                                     .Include(dh => dh.ChiTietDonHangs)
+                                     .FirstOrDefault(dh => dh.MaDonHang == maDH && dh.KhachHang.TenKhachHang == tenKH);
 
+            if (orderToRemove != null)
+            {
+                // Hủy đơn đặt hàng
+                db.DonDatHangs.Remove(orderToRemove);
+                db.SaveChanges();
+
+                return RedirectToAction("General", new { tenKH = tenKH });
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+
+
+        }
 
 
 
@@ -140,8 +167,48 @@ namespace Tiki.Controllers
                 .Where(dh => dh.KhachHang.TenKhachHang == tenKH)
                 .ToList();
 
-            return View(donHangList);
+            ViewBag.DonHangList = donHangList;
+            var khInfo = db.KhachHangs.FirstOrDefault(c => c.TenKhachHang == tenKH);
+            return View(khInfo);
         }
+
+        [HttpPost]
+        public ActionResult UpdateCustomerInfo(KhachHang kh)
+        {
+            if (ModelState.IsValid)
+            {
+                // Lấy ra KH dựa vào id
+                var tenKH = ((KhachHang)Session["KhachHang"]).TenKhachHang;
+                var existingCustomer = db.KhachHangs.FirstOrDefault(c => c.TenKhachHang == tenKH);
+
+                if (existingCustomer != null)
+                {
+                    // Update info KH
+                    existingCustomer.TenKhachHang = kh.TenKhachHang;
+                    existingCustomer.DiaChi = kh.DiaChi;
+                    existingCustomer.Email = kh.Email;
+                    existingCustomer.SoDienThoai = kh.SoDienThoai;
+                    existingCustomer.SoThe = kh.SoThe;
+                    existingCustomer.NgayHH = kh.NgayHH;
+                    existingCustomer.CVV = kh.CVV;
+
+
+                    db.SaveChanges();
+
+
+                    return RedirectToAction("General", new { tenKH = kh.TenKhachHang });
+                }
+                else
+                {
+
+                    return HttpNotFound();
+                }
+            }
+
+
+            return View("Home", "Index");
+        }
+
 
     }
 }
