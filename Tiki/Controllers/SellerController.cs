@@ -289,27 +289,33 @@ namespace Tiki.Controllers
             return View(sanPham);
         }
 
+        public ActionResult DeleteProduct(int? maSP)
+        {
+            if (maSP == null)
+            {
+                return RedirectToAction("ProductList");
+            }
 
-        //public ActionResult SalesReportByProduct(int maNCC)
-        //{
-        //    using (var context = new TikiEntities()) 
-        //    {
-        //        var salesData = context.ChiTietDonHangs
-        //     .Where(ct => ct.DonDatHang.KhachHang.SanPham.MaNCC == maNCC)
-        //     .Select(ct => new
-        //     {
-        //         NgayBan = ct.DonDatHang.NgayDat,
-        //         MaDonHang = ct.MaDonHang,
-        //         TenSanPham = ct.SanPham.TenSanPham,
-        //         Gia = ct.DonGia,
-        //         SoLuong = ct.SoLuong,
-        //         TongCong = ct.DonGia * ct.SoLuong
-        //     })
-        //     .ToList();
+            SanPham sp = db.SanPhams.Find(maSP);
 
-        //        return View(salesData);
-        //    }
-        //}
+            if (sp == null)
+            {
+                return RedirectToAction("ProductList");
+            }
+
+            //Tìm ràng buộc trong chi tiết đơn hàng
+            var ctdh = db.ChiTietDonHangs.Where(ct => ct.MaSP == maSP).ToList();
+            foreach (var ct in ctdh)
+            {
+                db.ChiTietDonHangs.Remove(ct);
+            }
+
+
+            db.SanPhams.Remove(sp);
+            db.SaveChanges();
+
+            return RedirectToAction("ProductList");
+        }
 
 
     }

@@ -11,7 +11,8 @@ namespace Tiki.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class SanPham
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,11 +23,14 @@ namespace Tiki.Models
         }
     
         public int MaSP { get; set; }
+        [Required]
         public string TenSanPham { get; set; }
         public string MoTa { get; set; }
+        [Required]
         public string HinhAnh1 { get; set; }
         public string HinhAnh2 { get; set; }
         public string HinhAnh3 { get; set; }
+        [Required]
         public Nullable<decimal> Gia { get; set; }
         public string ThuongHieu { get; set; }
         public string XuatXu { get; set; }

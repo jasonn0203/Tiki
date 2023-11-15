@@ -66,8 +66,28 @@
                                                     <label for="checkbox1"></label>
                                                 </span>
                                             </td>
-                                            <td>@item.TenSanPham</td>
-                                            <td>@item.PhanLoaiSP.TenPhanLoai</td>
+                                            <td>
+                                                @if (item.TenSanPham != null)
+                                                {
+                                                    @item.TenSanPham
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-danger">N/A</span>
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @if (item.PhanLoaiSP != null)
+                                                {
+                                                    @item.PhanLoaiSP.TenPhanLoai
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-danger">N/A</span>
+                                                }
+                                            </td>
+
                                             <td>@string.Format("{0:N0} đ", item.Gia)</td>
                                             <td>
                                                 <img src="@item.HinhAnh1" width="60" height="50" class="img-fluid rounded-2" />
@@ -77,9 +97,36 @@
                                                     <i class="fa-solid fa-pen-to-square text-info"></i>
                                                 </a>
 
-                                                <a href="">
+
+                                                @*<a href="@Url.Action("DeleteProduct","Seller", new {maSP = item.MaSP})">
+                                                        <i class="fa-solid fa-trash text-danger"></i>
+                                                    </a>*@
+
+                                                <!-- Button trigger modal -->
+                                                <button data-bs-toggle="modal" data-bs-target="#confirmPopup_@item.MaSP" type="button" class="">
                                                     <i class="fa-solid fa-trash text-danger"></i>
-                                                </a>
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="confirmPopup_@item.MaSP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered ">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa sản phẩm này ?</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                                                                <a href="@Url.Action("DeleteProduct", "Seller",  new {maSP = item.MaSP})" class="btn btn-danger text-decoration-none text-white" style="color: #aeaeae">
+                                                                    Xóa
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
                                             </td>
                                         </tr>
 

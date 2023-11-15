@@ -48,7 +48,17 @@ namespace Tiki.Controllers
         }
 
 
-
+        [HttpPost]
+        public ActionResult Search(string searchString)
+        {
+            //Lấy ra ds sản phẩm dựa theo query của người dùng
+            List<SanPham> spList = db.SanPhams.Where(s => s.TenSanPham.Contains(searchString) || s.PhanLoaiSP.TenPhanLoai.Contains(searchString)).ToList();
+            if (spList == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(spList);
+        }
 
 
     }

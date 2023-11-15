@@ -28,14 +28,23 @@
 
 
                 <div class="input-group flex-column-reverse " style="width: 60%;">
-                    <form class=" form-outline flex-fill">
+                    @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "form-outline flex-fill" }))
+                    {
+                        <div class="d-flex gap-2">
+                            <input type="search" id="searchForm" name="searchString" class="form-control form-control-lg " style="font-size:14px" placeholder="Tìm kiếm sản phẩm ..." />
+                            <button type="submit" class="btn btn-primary bg-main-blue ">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    }
+                    @*<form class=" form-outline flex-fill">
                         <div class="d-flex gap-2">
                             <input type="search" id="searchForm" class="form-control form-control-lg " style="font-size:14px" placeholder="Tìm kiếm sản phẩm ..." />
                             <button type="submit" class="btn btn-primary bg-main-blue ">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </div>
-                    </form>
+                    </form>*@
                     <div class="form-helper mb-2">
                         <span class="font-weight-bold">Gợi ý:</span>
                         <a href="#!" class="text-black-50">Sách,</a>
