@@ -40,6 +40,10 @@ namespace Tiki.Controllers
 
             ViewBag.SoLuongBan = totalQuantitySoldBySupplier.Count();
             ViewBag.SoLuongSP = spCount;
+            ViewBag.TongDoanhThu = TinhTongDoanhThu(maNCC);
+            ViewBag.TongBL = TinhTongDanhGia(maNCC);
+            ViewBag.BinhLuanList = getBinhLuanList(maNCC);
+
             ViewBag.Tab = "Dashboard";
             ViewBag.IsLoading = false;
 
@@ -47,6 +51,35 @@ namespace Tiki.Controllers
 
             return View();
         }
+
+        //Tính tổng doanh thu cho seller
+        private decimal? TinhTongDoanhThu(int maNCC)
+        {
+            decimal? tongTien = db.ChiTietDonHangs
+                                    .Where(n => n.SanPham.MaNCC == maNCC)
+                                    .Sum(t => (decimal?)t.SoLuong * t.DonGia);
+
+            return tongTien ?? 0;
+        }
+
+
+        //Tính tổng SL đánh giá
+        private int TinhTongDanhGia(int maNCC)
+        {
+
+            int tongBL = db.BinhLuans.Where(n => n.SanPham.MaNCC == maNCC).Count();
+            return tongBL;
+        }
+
+        //Lấy dsach đánh giá từ KH
+        public List<BinhLuan> getBinhLuanList(int maNCC)
+        {
+            return db.BinhLuans
+                     .Where(bl => db.SanPhams.Any(sp => sp.MaNCC == maNCC && sp.MaSP == bl.MaSP))
+                     .Include(bl => bl.KhachHang).OrderByDescending(t => t.NgayBinhLuan)
+                     .ToList();
+        }
+
 
         public ActionResult Management()
         {

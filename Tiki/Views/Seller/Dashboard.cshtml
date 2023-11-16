@@ -3,7 +3,9 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_SellerLayout.cshtml";
 }
-
+@{
+    var tk = Session["NhaCungCap"] as Tiki.Models.NhaCungCap;
+}
 <!-- PAGE CONTAINER-->
 <div class="page-container">
 
@@ -29,7 +31,7 @@
                         </div>
                     </div>
                     <div class="row m-t-25">
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6">
                             <div class="overview-item overview-item--c1">
                                 <div class="overview__inner">
                                     <div class="overview-box clearfix">
@@ -47,7 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6">
                             <div class="overview-item overview-item--c2">
                                 <div class="overview__inner">
                                     <div class="overview-box clearfix">
@@ -65,7 +67,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6">
                             <div class="overview-item overview-item--c3">
                                 <div class="overview__inner">
                                     <div class="overview-box clearfix">
@@ -73,7 +75,7 @@
                                             <i class="zmdi zmdi-calendar-note"></i>
                                         </div>
                                         <div class="text">
-                                            <h2>86</h2>
+                                            <h2>@ViewBag.TongBL</h2>
                                             <span>Lượt đánh giá</span>
                                         </div>
                                     </div>
@@ -83,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6">
                             <div class="overview-item overview-item--c4">
                                 <div class="overview__inner">
                                     <div class="overview-box clearfix">
@@ -91,8 +93,17 @@
                                             <i class="zmdi zmdi-money"></i>
                                         </div>
                                         <div class="text">
-                                            <h2>1,060,386 <sup>đ</sup></h2>
+                                            @if (ViewBag.TongDoanhThu != null)
+                                            {
+                                                <h2>@string.Format("{0:N0}", @ViewBag.TongDoanhThu) <sup>đ</sup></h2>
+                                            }
+                                            else
+                                            {
+                                                <h2>0 <sup>đ</sup></h2>
+                                            }
                                             <span>Doanh thu</span>
+
+
                                         </div>
                                     </div>
                                     <div class="overview-chart">
@@ -103,7 +114,7 @@
                         </div>
                     </div>
 
-                  
+
 
 
                     <div class="row">
@@ -112,63 +123,41 @@
                                 <div class="au-card-title" style="background-image:url('images/bg-title-01.jpg');">
                                     <div class="bg-overlay bg-overlay--blue"></div>
                                     <h3>
-                                        <i class="zmdi zmdi-account-calendar"></i>26 April, 2018
+                                        <i class="zmdi zmdi-account-calendar"></i>Danh sách các đánh giá
                                     </h3>
 
                                 </div>
                                 <div class="au-task js-list-load">
                                     <div class="au-task__title">
-                                        <p>Tasks for John Doe</p>
+                                        <p>Đánh giá các sản phẩm của <span class=" main-blue-color fw-bold">@tk.TenNhaCungCap</span></p>
                                     </div>
                                     <div class="au-task-list js-scrollbar3">
-                                        <div class="au-task__item au-task__item--danger">
-                                            <div class="au-task__item-inner">
-                                                <h5 class="task">
-                                                    <a href="#">Meeting about plan for Admin Template 2018</a>
-                                                </h5>
-                                                <span class="time">10:00 AM</span>
+
+                                        @foreach (var item in ViewBag.BinhLuanList)
+                                        {
+                                            <div class="au-task__item au-task__item--danger">
+                                                <div class="au-task__item-inner">
+                                                    <div class="task">
+                                                        <h4 class="main-blue-color">
+                                                            <i class="fa-solid fa-user me-1" style="color: #0a68ff;"></i>
+                                                            @item.KhachHang.TenKhachHang
+                                                        </h4>
+                                                        <p class="text-truncate fw-bolder">
+                                                            <i class="fa-solid fa-comment-dots fa-flip-horizontal me-1" style="color: #0a68ff;"></i>
+                                                            @item.NoiDung
+                                                        </p>
+                                                    </div>
+                                                    <span class="text-body-tertiary">
+                                                        <i class="fa-solid fa-calendar-days me-1" style="color: #0a68ff;"></i>
+                                                        @item.NgayBinhLuan
+                                                    </span>
+                                                    <p class="text-truncate my-2">Trong sản phẩm : <span class="main-blue-color fw-bold"> @item.SanPham.TenSanPham</span></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="au-task__item au-task__item--warning">
-                                            <div class="au-task__item-inner">
-                                                <h5 class="task">
-                                                    <a href="#">Create new task for Dashboard</a>
-                                                </h5>
-                                                <span class="time">11:00 AM</span>
-                                            </div>
-                                        </div>
-                                        <div class="au-task__item au-task__item--primary">
-                                            <div class="au-task__item-inner">
-                                                <h5 class="task">
-                                                    <a href="#">Meeting about plan for Admin Template 2018</a>
-                                                </h5>
-                                                <span class="time">02:00 PM</span>
-                                            </div>
-                                        </div>
-                                        <div class="au-task__item au-task__item--success">
-                                            <div class="au-task__item-inner">
-                                                <h5 class="task">
-                                                    <a href="#">Create new task for Dashboard</a>
-                                                </h5>
-                                                <span class="time">03:30 PM</span>
-                                            </div>
-                                        </div>
-                                        <div class="au-task__item au-task__item--danger js-load-item">
-                                            <div class="au-task__item-inner">
-                                                <h5 class="task">
-                                                    <a href="#">Meeting about plan for Admin Template 2018</a>
-                                                </h5>
-                                                <span class="time">10:00 AM</span>
-                                            </div>
-                                        </div>
-                                        <div class="au-task__item au-task__item--warning js-load-item">
-                                            <div class="au-task__item-inner">
-                                                <h5 class="task">
-                                                    <a href="#">Create new task for Dashboard</a>
-                                                </h5>
-                                                <span class="time">11:00 AM</span>
-                                            </div>
-                                        </div>
+                                        }
+
+
+
                                     </div>
                                     <div class="au-task__footer">
                                         <button class="au-btn au-btn-load js-load-btn">load more</button>
