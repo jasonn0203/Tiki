@@ -105,7 +105,7 @@ body {
 
 .card-img-carousel {
     width: 100%;
-    max-height: 237px;
+    height: 237px;
     object-fit: cover;
 }
 

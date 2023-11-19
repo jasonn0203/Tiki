@@ -111,7 +111,7 @@ namespace Tiki.Controllers
                 sanpham.SoLuong = short.Parse(form["soLuong"].ToString());
             }
             //Delay 0.75s
-            Thread.Sleep(750);
+            Thread.Sleep(250);
             return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
 
 

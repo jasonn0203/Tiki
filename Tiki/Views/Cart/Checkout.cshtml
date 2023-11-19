@@ -81,9 +81,9 @@
                                             @using (Html.BeginForm("UpdateCartQuantity", "Cart", new { maSP = item.MaSP }))
                                             {
                                                 @*<button class="btn btn-dark border-0 bg-main-blue btn-sm me-1 mb-2">
-                                                    <i class="fa-solid fa-rotate fa-spin-pulse"></i>
-                                                    Cập nhật
-                                                </button>*@
+                                                        <i class="fa-solid fa-rotate fa-spin-pulse"></i>
+                                                        Cập nhật
+                                                    </button>*@
 
                                                 <!-- Quantity -->
                                                 <div class="d-flex mb-4" style="max-width: 300px">
@@ -147,7 +147,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h5 class="mb-0">Chi tiết thẻ</h5>
-                            <img src="~/Assets/tiki_logo.png"
+                            <img src="https://salt.tikicdn.com/ts/upload/c1/64/f7/4e6e925ea554fc698123ea71ed7bda26.png"
                                  class="img-fluid rounded-3" style="width: 45px;" alt="Avatar">
                         </div>
 
@@ -172,22 +172,29 @@
                             </div>
 
                             <div class="form-outline form-white mb-4">
-                                <input type="text"  id="typeText" class="form-control form-control-lg"
+                                <input type="text" id="typeText" class="form-control form-control-lg"
                                        placeholder="1234 5678 9012 3457" name="SoThe" value="@tk.SoThe" minlength="16" maxlength="19" />
                                 <label class="form-label" for="typeText">Số thẻ</label>
                             </div>
 
                             <div class="row mb-4">
                                 <div class="col-md-6">
+                                    @*    <div class="form-outline form-white">
+                                            <input type="date"  id="typeExp" class="form-control form-control-lg"
+                                                   placeholder="02/2023" size="7" minlength="7" maxlength="7" name="NgayHH" value="@tk.NgayHH" />
+                                            <label class="form-label" for="typeExp">Ngày hết hạn</label>
+                                        </div>*@
+
                                     <div class="form-outline form-white">
-                                        <input type="date"  id="typeExp" class="form-control form-control-lg"
-                                               placeholder="02/2023" size="7" minlength="7" maxlength="7" name="NgayHH" value="@tk.NgayHH" />
+
+                                        <input type="text" id="expirationDate" class="form-control form-control-lg" name="NgayHH" value="@tk.NgayHH"
+                                               placeholder="05/2023" size="7" minlength="7" maxlength="7" oninput="formatExpirationDate(this)" />
                                         <label class="form-label" for="typeExp">Ngày hết hạn</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-outline form-white">
-                                        <input type="password"  id="CVV" class="form-control form-control-lg"
+                                        <input type="password" id="CVV" class="form-control form-control-lg"
                                                placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" name="CVV" value="@tk.CVV" />
                                         <label class="form-label" for="CVV">Cvv</label>
                                     </div>
@@ -260,4 +267,45 @@
 
     // Cập nhật nội dung của phần tử với khoảng ngày mới
     deliveryDateElement.textContent = startDateString + " - " + endDateString;
+
+
+
+    function formatExpirationDate(input) {
+        // Lấy giá trị nhập vào
+        var value = input.value;
+
+        // Loại bỏ các ký tự không phải số và "/"
+        value = value.replace(/[^0-9/]/g, '');
+
+        // Kiểm tra độ dài
+        if (value.length > 7) {
+            value = value.substr(0, 7);
+        }
+
+        // Tách tháng và năm
+        var parts = value.split('/');
+
+        // Định dạng lại giá trị ngày tháng
+        if (parts[0]) {
+            parts[0] = parts[0].substring(0, 2);
+            if (parseInt(parts[1]) < 1) {
+                parts[0] = '01';
+            } else if (parseInt(parts[0]) > 12) {
+                parts[0] = '12';
+            }
+        }
+
+        if (parts[1]) {
+            parts[1] = parts[1].substring(0, 4);
+        }
+
+        // Gán giá trị đã định dạng lại vào trường nhập
+        input.value = parts.join('/');
+
+        // Tự động thêm "/" sau khi nhập hai số đầu
+        if (input.selectionStart === 2 && input.selectionEnd === 2 && input.value.length === 2) {
+            input.value = input.value + '/';
+        }
+    }
+
 </script>

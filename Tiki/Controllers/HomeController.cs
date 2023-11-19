@@ -13,8 +13,14 @@ namespace Tiki.Controllers
         public ActionResult Index()
         {
             ViewBag.PhanLoaiList = db.PhanLoaiSPs.ToList();
-            ViewBag.SanPhamList = db.SanPhams.ToList();
 
+
+            List<SanPham> sphamList = db.SanPhams.ToList();
+            //Random ds sản phẩm
+            Random rd = new Random();
+            sphamList = sphamList.OrderBy(r => rd.Next()).ToList();
+
+            ViewBag.SanPhamList = sphamList;
             return View();
         }
 

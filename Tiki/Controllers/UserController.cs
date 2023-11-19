@@ -33,6 +33,7 @@ namespace Tiki.Controllers
                     return View(kh);
                 }
 
+
                 var khachHang = new KhachHang
                 {
                     TenKhachHang = kh.TenKhachHang,
