@@ -148,6 +148,8 @@
     <Compile Include="Models\BinhLuan.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Facade\CartFacade.cs" />
+    <Compile Include="Models\Facade\CartService.cs" />
     <Compile Include="Models\ChiTietDonHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -187,8 +189,9 @@
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SellerAuthenSingleton.cs" />
-    <Compile Include="Models\UserAuthenSingleton.cs" />
+    <Compile Include="Models\Singleton\SellerAuthenSingleton.cs" />
+    <Compile Include="Models\Singleton\UserAuthenSingleton.cs" />
+    <Compile Include="Models\Strategy\ISearchStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

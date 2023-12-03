@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 using Tiki.Models;
 
@@ -12,6 +11,9 @@ namespace Tiki.Controllers
     public class CartController : Controller
     {
         readonly TikiEntities db = new TikiEntities();
+
+
+
         public int GetMaKH()
         {
             return UserAuthenSingleton.Instance.MaKH;
@@ -28,6 +30,7 @@ namespace Tiki.Controllers
 
 
             List<GioHang> gioHang = GetGioHang();
+
 
             var cartItems = gioHang.Where(item => item.MaKH == maKH).ToList();
 

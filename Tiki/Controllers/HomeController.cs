@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Tiki.Models;
+using Tiki.Models.Strategy;
 
 namespace Tiki.Controllers
 {
@@ -54,7 +54,7 @@ namespace Tiki.Controllers
         }
 
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Search(string searchString)
         {
             //Lấy ra ds sản phẩm dựa theo query của người dùng
@@ -64,7 +64,28 @@ namespace Tiki.Controllers
                 return RedirectToAction("Index");
             }
             return View(spList);
+        }*/
+
+
+        [HttpPost]
+        public ActionResult Search(string searchString)
+        {
+            IQueryable<SanPham> sanPhams = db.SanPhams.AsQueryable();
+
+            // Chọn chiến lược dựa trên yêu cầu người dùng hoặc điều kiện khác
+            ISearchStrategy searchStrategy = new TenSanPhamSearchStrategy(); 
+
+            // Thực hiện tìm kiếm bằng cách sử dụng chiến lược đã chọn
+            List<SanPham> spList = searchStrategy.Search(searchString, sanPhams);
+
+            if (spList == null || spList.Count == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(spList);
         }
+
 
 
     }

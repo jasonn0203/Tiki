@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 
 namespace Tiki.Models
 {
@@ -30,9 +27,8 @@ namespace Tiki.Models
             TenSanPham = sp.TenSanPham;
             HinhAnh1 = sp.HinhAnh1;
             Gia = (decimal)sp.Gia;
-            SoLuong = soLuong; 
+            SoLuong = soLuong;
         }
-
 
 
     }
