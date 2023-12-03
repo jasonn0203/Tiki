@@ -12,7 +12,10 @@ namespace Tiki.Controllers
     public class SellerController : Controller
     {
         readonly TikiEntities db = new TikiEntities();
-
+        public int GetMaNCC()
+        {
+            return SellerAuthenSingleton.Instance.MaNCC;
+        }
 
         // GET: Seller
         public ActionResult Dashboard()

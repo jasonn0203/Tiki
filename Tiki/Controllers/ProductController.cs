@@ -39,7 +39,7 @@ namespace Tiki.Controllers
         [HttpPost]
         public ActionResult AddComment(int maSP, int maKH, string noiDung, string TenSanPham)
         {
-            if (Session["KhachHang"] == null)
+            if (UserAuthenSingleton.Instance == null)
             {
                 return RedirectToAction("SignIn", "User");
             }

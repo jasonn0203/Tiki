@@ -14,6 +14,10 @@ namespace Tiki.Controllers
         // GET: User
         public ActionResult SignUp()
         {
+            if (UserAuthenSingleton.Instance != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -57,7 +61,7 @@ namespace Tiki.Controllers
         //GET
         public ActionResult SignIn()
         {
-            if (Session["KhachHang"] != null)
+            if (UserAuthenSingleton.Instance != null)
             {
                 return RedirectToAction("Index", "Home");
             }

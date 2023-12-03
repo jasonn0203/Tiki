@@ -12,13 +12,20 @@ namespace Tiki.Controllers
     public class CartController : Controller
     {
         readonly TikiEntities db = new TikiEntities();
+        public int GetMaKH()
+        {
+            return UserAuthenSingleton.Instance.MaKH;
+        }
+
         // GET: Cart
         public ActionResult Checkout(int maKH)
         {
-            if (Session["KhachHang"] == null)
+
+            if (UserAuthenSingleton.Instance == null)
             {
                 return RedirectToAction("SignIn", "User");
             }
+
 
             List<GioHang> gioHang = GetGioHang();
 
@@ -46,11 +53,11 @@ namespace Tiki.Controllers
         public ActionResult AddToCart(int maSP, short soLuong)
         {
 
-            if (Session["KhachHang"] == null)
+            if (UserAuthenSingleton.Instance == null)
             {
                 return RedirectToAction("SignIn", "User");
             }
-            var maKH = ((KhachHang)Session["KhachHang"]).MaKH;
+            var maKH = GetMaKH();
 
 
             List<GioHang> gioHang = GetGioHang();
@@ -84,11 +91,11 @@ namespace Tiki.Controllers
             if (sanpham != null)
             {
                 gioHang.RemoveAll(sp => sp.MaSP == MaSP);
-                return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH }); //Quay về trang giỏ hàng
+                return RedirectToAction("Checkout", new { maKH = GetMaKH() }); //Quay về trang giỏ hàng
             }
             if (gioHang.Count == 0) //Quay về trang chủ nếu giỏ hàng không có gì
                 return RedirectToAction("Index", "Home");
-            return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
+            return RedirectToAction("Checkout", new { maKH = GetMaKH() });
         }
 
         public ActionResult DeleteAllFromCart()
@@ -97,7 +104,7 @@ namespace Tiki.Controllers
 
             gioHang.Clear();
 
-            return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
+            return RedirectToAction("Checkout", new { maKH = GetMaKH() });
         }
 
         public ActionResult UpdateCartQuantity(int maSP, FormCollection form)
@@ -112,14 +119,14 @@ namespace Tiki.Controllers
             }
             //Delay 0.75s
             Thread.Sleep(250);
-            return RedirectToAction("Checkout", new { maKH = ((KhachHang)Session["KhachHang"]).MaKH });
+            return RedirectToAction("Checkout", new { maKH = GetMaKH() });
 
 
         }
 
         public ActionResult Pay()
         {
-            KhachHang kh = Session["KhachHang"] as KhachHang;
+            KhachHang kh = UserAuthenSingleton.Instance;
             if (kh == null)
             {
                 return RedirectToAction("SignIn", "User");
@@ -166,7 +173,7 @@ namespace Tiki.Controllers
 
         public ActionResult SuccessfulPay()
         {
-            KhachHang kh = Session["KhachHang"] as KhachHang;
+            KhachHang kh = UserAuthenSingleton.Instance;
 
             if (kh != null && kh.DaThanhToan)
             {
@@ -211,12 +218,6 @@ namespace Tiki.Controllers
             ViewBag.TongSL = TinhTongSL();
             return PartialView();
         }
-
-
-
-
-
-
 
 
     }
