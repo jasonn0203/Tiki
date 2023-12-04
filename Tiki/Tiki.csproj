@@ -149,7 +149,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Facade\CartFacade.cs" />
-    <Compile Include="Models\Facade\CartService.cs" />
     <Compile Include="Models\ChiTietDonHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

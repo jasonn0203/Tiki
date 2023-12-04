@@ -13,13 +13,18 @@ namespace Tiki.Models
                 if (instance == null)
                 {
                     instance = (KhachHang)HttpContext.Current.Session["KhachHang"];
-
                 }
                 return instance;
+            }
+            set
+            {
+                instance = value;
+                HttpContext.Current.Session["KhachHang"] = value;
             }
         }
 
         private UserAuthenSingleton() { }
     }
+
 
 }

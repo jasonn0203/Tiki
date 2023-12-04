@@ -19,4 +19,12 @@ namespace Tiki.Models.Strategy
             return sanPhams.Where(s => s.TenSanPham.Contains(searchString)).ToList();
         }
     }
+
+    public class TenPhanLoaiSearchStrategy : ISearchStrategy
+    {
+        public List<SanPham> Search(string searchString, IQueryable<SanPham> sanPhams)
+        {
+            return sanPhams.Where(s => s.PhanLoaiSP.TenPhanLoai.Contains(searchString)).ToList();
+        }
+    }
 }

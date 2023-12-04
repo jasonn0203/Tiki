@@ -72,19 +72,25 @@ namespace Tiki.Controllers
         {
             IQueryable<SanPham> sanPhams = db.SanPhams.AsQueryable();
 
-            // Chọn chiến lược dựa trên yêu cầu người dùng hoặc điều kiện khác
-            ISearchStrategy searchStrategy = new TenSanPhamSearchStrategy(); 
+            // Chọn chiến lược
+            ISearchStrategy searchByNameStrategy = new TenSanPhamSearchStrategy();
+            ISearchStrategy searchByCateStrategy = new TenPhanLoaiSearchStrategy();
 
-            // Thực hiện tìm kiếm bằng cách sử dụng chiến lược đã chọn
-            List<SanPham> spList = searchStrategy.Search(searchString, sanPhams);
+            // Tìm kiếm bằng cách sử dụng cả hai chiến lược
+            List<SanPham> spListName = searchByNameStrategy.Search(searchString, sanPhams);
+            List<SanPham> spListCate = searchByCateStrategy.Search(searchString, sanPhams);
 
-            if (spList == null || spList.Count == 0)
+            // Kết hợp kết quả từ cả hai chiến lược
+            List<SanPham> combinedList = spListName.Concat(spListCate).ToList();
+
+            if (combinedList == null || combinedList.Count == 0)
             {
                 return RedirectToAction("Index");
             }
 
-            return View(spList);
+            return View(combinedList);
         }
+
 
 
 

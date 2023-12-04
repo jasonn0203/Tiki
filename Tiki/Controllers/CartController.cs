@@ -11,8 +11,12 @@ namespace Tiki.Controllers
     public class CartController : Controller
     {
         readonly TikiEntities db = new TikiEntities();
+        private readonly CartFacade cartFacade;
 
-
+        public CartController()
+        {
+            cartFacade = new CartFacade(db, HttpContext);
+        }
 
         public int GetMaKH()
         {
@@ -29,7 +33,8 @@ namespace Tiki.Controllers
             }
 
 
-            List<GioHang> gioHang = GetGioHang();
+            //List<GioHang> gioHang = GetGioHang();
+            List<GioHang> gioHang = cartFacade.GetCartItems();
 
 
             var cartItems = gioHang.Where(item => item.MaKH == maKH).ToList();
@@ -40,79 +45,106 @@ namespace Tiki.Controllers
             return View(cartItems);
         }
 
-        public List<GioHang> GetGioHang()
-        {
-            List<GioHang> gioHang = Session["GioHang"] as List<GioHang>;
+        /*        public List<GioHang> GetGioHang()
+                {
+                    List<GioHang> gioHang = Session["GioHang"] as List<GioHang>;
 
-            if (gioHang == null)
-            {
-                gioHang = new List<GioHang>();
-                Session["GioHang"] = gioHang;
-            }
-            return gioHang;
-        }
+                    if (gioHang == null)
+                    {
+                        gioHang = new List<GioHang>();
+                        Session["GioHang"] = gioHang;
+                    }
+                    return gioHang;
+                }*/
+
+
+        /*        public ActionResult AddToCart(int maSP, short soLuong)
+                {
+
+                    if (UserAuthenSingleton.Instance == null)
+                    {
+                        return RedirectToAction("SignIn", "User");
+                    }
+                    var maKH = GetMaKH();
+
+
+                    List<GioHang> gioHang = GetGioHang();
+                    GioHang sp = gioHang.Find(s => s.MaSP == maSP);
+
+                    var existingCartItem = gioHang.FirstOrDefault(item => item.MaKH == maKH && item.MaSP == maSP);
+
+                    if (existingCartItem != null)
+                    {
+                        existingCartItem.SoLuong += soLuong;
+
+
+                    }
+                    else if (sp == null)
+                    {
+                        sp = new GioHang(maSP, soLuong);
+                        sp.MaKH = maKH;
+                        gioHang.Add(sp);
+                        return RedirectToAction("Checkout", new { maKH = maKH });
+                    }
+
+                    return RedirectToAction("Checkout", new { maKH = maKH });
+                }*/
 
 
         public ActionResult AddToCart(int maSP, short soLuong)
         {
-
             if (UserAuthenSingleton.Instance == null)
             {
                 return RedirectToAction("SignIn", "User");
             }
+
             var maKH = GetMaKH();
+            cartFacade.AddToCart(maSP, soLuong, maKH);
 
-
-            List<GioHang> gioHang = GetGioHang();
-            GioHang sp = gioHang.Find(s => s.MaSP == maSP);
-
-            var existingCartItem = gioHang.FirstOrDefault(item => item.MaKH == maKH && item.MaSP == maSP);
-
-            if (existingCartItem != null)
-            {
-                existingCartItem.SoLuong += soLuong;
-
-
-            }
-            else if (sp == null)
-            {
-                sp = new GioHang(maSP, soLuong);
-                sp.MaKH = maKH;
-                gioHang.Add(sp);
-                return RedirectToAction("Checkout", new { maKH = maKH });
-            }
+            cartFacade.SaveChangesCart();
 
             return RedirectToAction("Checkout", new { maKH = maKH });
         }
 
 
+
         public ActionResult DeleteFromCart(int MaSP)
         {
-            List<GioHang> gioHang = GetGioHang();
-            //Lấy sản phẩm trong giỏ hàng
-            var sanpham = gioHang.FirstOrDefault(sp => sp.MaSP == MaSP);
-            if (sanpham != null)
-            {
-                gioHang.RemoveAll(sp => sp.MaSP == MaSP);
-                return RedirectToAction("Checkout", new { maKH = GetMaKH() }); //Quay về trang giỏ hàng
-            }
-            if (gioHang.Count == 0) //Quay về trang chủ nếu giỏ hàng không có gì
-                return RedirectToAction("Index", "Home");
+            //List<GioHang> gioHang = GetGioHang();
+            /* List<GioHang> gioHang = cartFacade.GetCartItems();
+             //Lấy sản phẩm trong giỏ hàng
+             var sanpham = gioHang.FirstOrDefault(sp => sp.MaSP == MaSP);
+             if (sanpham != null)
+             {
+                 gioHang.RemoveAll(sp => sp.MaSP == MaSP);
+                 return RedirectToAction("Checkout", new { maKH = GetMaKH() }); //Quay về trang giỏ hàng
+             }
+             if (gioHang.Count == 0) //Quay về trang chủ nếu giỏ hàng không có gì
+                 return RedirectToAction("Index", "Home");*/
+
+
+            cartFacade.RemoveFromCart(MaSP);
+            cartFacade.SaveChangesCart();
             return RedirectToAction("Checkout", new { maKH = GetMaKH() });
         }
 
         public ActionResult DeleteAllFromCart()
         {
-            List<GioHang> gioHang = GetGioHang();
+            //List<GioHang> gioHang = GetGioHang();
+            /*List<GioHang> gioHang = cartFacade.GetCartItems();
 
-            gioHang.Clear();
+            gioHang.Clear();*/
+
+            cartFacade.ClearCart();
+            cartFacade.SaveChangesCart();
 
             return RedirectToAction("Checkout", new { maKH = GetMaKH() });
         }
 
         public ActionResult UpdateCartQuantity(int maSP, FormCollection form)
         {
-            List<GioHang> gioHang = GetGioHang();
+            //List<GioHang> gioHang = GetGioHang();
+            List<GioHang> gioHang = cartFacade.GetCartItems();
 
             var sanpham = gioHang.SingleOrDefault(sp => sp.MaSP == maSP);
             //Ktra nếu có sp thì mới đc sửa sluong
@@ -136,7 +168,8 @@ namespace Tiki.Controllers
             }
 
             // Lấy giỏ hàng hiện tại
-            List<GioHang> gioHang = GetGioHang();
+            //List<GioHang> gioHang = GetGioHang();
+            List<GioHang> gioHang = cartFacade.GetCartItems();
 
 
             // Tạo đơn đặt hàng
@@ -196,7 +229,9 @@ namespace Tiki.Controllers
         private int TinhTongSL()
         {
             int tongSL = 0;
-            List<GioHang> gioHang = GetGioHang();
+            //List<GioHang> gioHang = GetGioHang();
+            List<GioHang> gioHang = cartFacade.GetCartItems();
+
             if (gioHang != null)
                 tongSL = gioHang.Sum(sp => sp.SoLuong);
 
@@ -206,7 +241,9 @@ namespace Tiki.Controllers
         private decimal TinhTongTien()
         {
             decimal TongTien = 0;
-            List<GioHang> gioHang = GetGioHang();
+            //List<GioHang> gioHang = GetGioHang();
+            List<GioHang> gioHang = cartFacade.GetCartItems();
+
             if (gioHang != null)
                 TongTien = gioHang.Sum(sp => sp.TongTien);
             TongTien += 25000;

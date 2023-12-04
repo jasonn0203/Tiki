@@ -94,12 +94,16 @@ namespace Tiki.Controllers
 
         public ActionResult LogOut()
         {
+            // Set UserAuthenSingleton.Instance = null để xóa 
+            UserAuthenSingleton.Instance = null; 
+
             Session.Clear();
             Session.Abandon();
             Session["KhachHang"] = null;
 
             return RedirectToAction("Index", "Home");
         }
+
 
 
 
