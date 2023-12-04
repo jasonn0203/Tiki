@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Tiki.Models;
+using Tiki.Models.Singleton;
 
 namespace Tiki.Controllers
 {
     public class ProductController : Controller
     {
-        readonly TikiEntities db = new TikiEntities();
+        private readonly TikiEntities db = DatabaseSingleton.Instance;
 
         // GET: Detail
         public ActionResult Detail(string tenSP)

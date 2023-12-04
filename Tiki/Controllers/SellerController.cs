@@ -5,12 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Tiki.Models;
+using Tiki.Models.Singleton;
 
 namespace Tiki.Controllers
 {
     public class SellerController : Controller
     {
-        readonly TikiEntities db = new TikiEntities();
+        private readonly TikiEntities db = DatabaseSingleton.Instance;
+
         public int GetMaNCC()
         {
             return SellerAuthenSingleton.Instance.MaNCC;

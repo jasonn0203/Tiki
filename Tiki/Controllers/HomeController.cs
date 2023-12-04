@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Tiki.Models;
+using Tiki.Models.Singleton;
 using Tiki.Models.Strategy;
 
 namespace Tiki.Controllers
 {
     public class HomeController : Controller
     {
-        readonly TikiEntities db = new TikiEntities();
+        private readonly TikiEntities db = DatabaseSingleton.Instance;
+
         public ActionResult Index()
         {
             ViewBag.PhanLoaiList = db.PhanLoaiSPs.ToList();
@@ -25,33 +27,70 @@ namespace Tiki.Controllers
         }
 
 
+        /* public ActionResult ProductByCategory(string tenPL, string sortOrder)
+         {
+             // Giá trị mặc định ban đầu 
+             var spTheoPLList = db.SanPhams.Where(sp => sp.PhanLoaiSP.TenPhanLoai == tenPL).ToList();
+             ViewBag.PriceDesc = false;
+             ViewBag.PriceAsc = false;
+             switch (sortOrder)
+             {
+                 case "PriceAsc":
+                     spTheoPLList = spTheoPLList.OrderBy(s => s.Gia).ToList();
+                     ViewBag.PriceDesc = false;
+                     ViewBag.PriceAsc = true;
+                     break;
+                 case "PriceDesc":
+                     spTheoPLList = spTheoPLList.OrderByDescending(s => s.Gia).ToList();
+                     ViewBag.PriceAsc = false;
+                     ViewBag.PriceDesc = true;
+                     break;
+                 default:
+                     // Sort products by product name by default
+                     spTheoPLList = spTheoPLList.OrderBy(s => s.TenSanPham).ToList();
+                     break;
+             }
+             ViewBag.TenPL = tenPL;
+
+             return View(spTheoPLList);
+         }*/
+
         public ActionResult ProductByCategory(string tenPL, string sortOrder)
         {
-            // Giá trị mặc định ban đầu 
             var spTheoPLList = db.SanPhams.Where(sp => sp.PhanLoaiSP.TenPhanLoai == tenPL).ToList();
-            ViewBag.PriceDesc = false;
-            ViewBag.PriceAsc = false;
+            ViewBag.TenPL = tenPL;
+
+            // Use a strategy based on the selected sort order
+            ISortStrategy sortingStrategy;
             switch (sortOrder)
             {
                 case "PriceAsc":
-                    spTheoPLList = spTheoPLList.OrderBy(s => s.Gia).ToList();
+                    sortingStrategy = new PriceAscendingSortingStrategy();
                     ViewBag.PriceDesc = false;
                     ViewBag.PriceAsc = true;
                     break;
                 case "PriceDesc":
-                    spTheoPLList = spTheoPLList.OrderByDescending(s => s.Gia).ToList();
+                    sortingStrategy = new PriceDescendingSortingStrategy();
                     ViewBag.PriceAsc = false;
                     ViewBag.PriceDesc = true;
                     break;
                 default:
-                    // Sort products by product name by default
-                    spTheoPLList = spTheoPLList.OrderBy(s => s.TenSanPham).ToList();
+
+                    sortingStrategy = new DefaultSortingStrategy();
+                    ViewBag.PriceAsc = false;
+                    ViewBag.PriceDesc = false;
                     break;
             }
-            ViewBag.TenPL = tenPL;
+
+            spTheoPLList = sortingStrategy.SortProducts(spTheoPLList);
 
             return View(spTheoPLList);
         }
+
+
+
+
+
 
 
         /*[HttpPost]

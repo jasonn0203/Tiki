@@ -5,12 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Tiki.Models;
+using Tiki.Models.Singleton;
 
 namespace Tiki.Controllers
 {
     public class UserController : Controller
     {
-        readonly TikiEntities db = new TikiEntities();
+        private readonly TikiEntities db = DatabaseSingleton.Instance;
+
         // GET: User
         public ActionResult SignUp()
         {
@@ -95,7 +97,7 @@ namespace Tiki.Controllers
         public ActionResult LogOut()
         {
             // Set UserAuthenSingleton.Instance = null để xóa 
-            UserAuthenSingleton.Instance = null; 
+            UserAuthenSingleton.Instance = null;
 
             Session.Clear();
             Session.Abandon();

@@ -188,9 +188,11 @@
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Singleton\DatabaseSingleton.cs" />
     <Compile Include="Models\Singleton\SellerAuthenSingleton.cs" />
     <Compile Include="Models\Singleton\UserAuthenSingleton.cs" />
     <Compile Include="Models\Strategy\ISearchStrategy.cs" />
+    <Compile Include="Models\Strategy\ISortStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

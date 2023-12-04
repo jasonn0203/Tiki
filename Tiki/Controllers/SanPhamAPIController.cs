@@ -14,7 +14,7 @@ namespace Tiki.Controllers
         public JsonResult Index()
         {
             DataModel db = new DataModel();
-           ArrayList dataList = db.Get("EXEC LAYTTSANPHAM;");
+            ArrayList dataList = db.Get("EXEC LAYTTSANPHAM;");
             return Json(dataList, JsonRequestBehavior.AllowGet);
         }
 

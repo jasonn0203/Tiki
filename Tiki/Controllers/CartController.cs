@@ -5,12 +5,13 @@ using System.Linq;
 using System.Threading;
 using System.Web.Mvc;
 using Tiki.Models;
+using Tiki.Models.Singleton;
 
 namespace Tiki.Controllers
 {
     public class CartController : Controller
     {
-        readonly TikiEntities db = new TikiEntities();
+        private readonly TikiEntities db = DatabaseSingleton.Instance;
         private readonly CartFacade cartFacade;
 
         public CartController()
