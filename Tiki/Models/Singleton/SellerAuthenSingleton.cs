@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 
 namespace Tiki.Models
 {
@@ -13,11 +10,16 @@ namespace Tiki.Models
         {
             get
             {
-                if (instance == null && HttpContext.Current != null && HttpContext.Current.Session != null)
+                if (instance == null)
                 {
                     instance = (NhaCungCap)HttpContext.Current.Session["NhaCungCap"];
                 }
                 return instance;
+            }
+            set
+            {
+                instance = value;
+                HttpContext.Current.Session["NhaCungCap"] = value;
             }
         }
 

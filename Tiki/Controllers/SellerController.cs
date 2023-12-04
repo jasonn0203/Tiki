@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Tiki.Models;
 
@@ -20,13 +19,13 @@ namespace Tiki.Controllers
         // GET: Seller
         public ActionResult Dashboard()
         {
-            if (Session["NhaCungCap"] == null)
+            if (SellerAuthenSingleton.Instance == null)
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
             ViewBag.IsLoading = true;
 
-            var maNCC = ((NhaCungCap)Session["NhaCungCap"]).MaNCC;
+            var maNCC = GetMaNCC();
 
             //Số sp đăng bán
             int spCount = 0;
@@ -86,13 +85,13 @@ namespace Tiki.Controllers
 
         public ActionResult Management()
         {
-            if (Session["NhaCungCap"] == null)
+            if (SellerAuthenSingleton.Instance == null)
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
             ViewBag.Tab = "Management";
 
-            var maNCC = ((NhaCungCap)Session["NhaCungCap"]).MaNCC;
+            var maNCC = GetMaNCC();
 
             //Doanh thu theo sản phẩm ( Tạo thêm 1 class để chứa thông tin )
             var doanhThuTheoSanPham = db.ChiTietDonHangs
@@ -121,6 +120,10 @@ namespace Tiki.Controllers
         //GET
         public ActionResult SellerSignUp()
         {
+            if (SellerAuthenSingleton.Instance != null)
+            {
+                return RedirectToAction("Dashboard");
+            }
             return View();
         }
 
@@ -165,7 +168,7 @@ namespace Tiki.Controllers
 
         public ActionResult SellerSignIn()
         {
-            if (Session["NhaCungCap"] != null)
+            if (SellerAuthenSingleton.Instance != null)
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
@@ -183,7 +186,7 @@ namespace Tiki.Controllers
 
             if (checkNCC != null)
             {
-                Session["NhaCungCap"] = checkNCC;
+                SellerAuthenSingleton.Instance = checkNCC;
 
 
                 return RedirectToAction("Dashboard", "Seller");
@@ -201,6 +204,8 @@ namespace Tiki.Controllers
 
         public ActionResult LogOut()
         {
+            SellerAuthenSingleton.Instance = null;
+
             Session.Clear();
             Session.Abandon();
             Session["NhaCungCap"] = null;
@@ -210,7 +215,7 @@ namespace Tiki.Controllers
 
         public ActionResult ProductList()
         {
-            if (Session["NhaCungCap"] == null)
+            if (SellerAuthenSingleton.Instance == null)
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
@@ -219,7 +224,7 @@ namespace Tiki.Controllers
 
 
             // Lấy mã chủ nhà từ session
-            var maNCC = ((NhaCungCap)Session["NhaCungCap"]).MaNCC;
+            var maNCC = GetMaNCC();
 
             // Lấy danh sách các phòng thuộc mã chủ nhà
             List<SanPham> spList = db.SanPhams.Where(s => s.MaNCC == maNCC).ToList();
@@ -240,7 +245,7 @@ namespace Tiki.Controllers
         /*THÊM SP*/
         public ActionResult AddProduct()
         {
-            if (Session["NhaCungCap"] == null)
+            if (SellerAuthenSingleton.Instance == null)
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
@@ -262,8 +267,8 @@ namespace Tiki.Controllers
             {
                 /*Lấy mã nhà cung cấp*/
 
-                var nhaCungCap = (NhaCungCap)Session["NhaCungCap"];
-                sanPham.MaNCC = nhaCungCap.MaNCC;
+
+                sanPham.MaNCC = GetMaNCC();
 
                 db.SanPhams.Add(sanPham);
                 db.SaveChanges();
@@ -280,7 +285,7 @@ namespace Tiki.Controllers
         // GET: 
         public ActionResult EditProduct(int? maSP)
         {
-            if (Session["NhaCungCap"] == null)
+            if (SellerAuthenSingleton.Instance == null)
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
