@@ -9,7 +9,12 @@
 <ul class="nav nav-pills nav-justified mb-3" style="border-style: solid; border-radius: 12px; border-width: 1px; border-color: rgb(128, 128, 128,0.2);" id="pills-tab" role="tablist">
 
     <li class="nav-item border-end" role="presentation">
-        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false">Đơn hàng</button>
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false">Đơn hàng đặt thành công</button>
+    </li>
+
+
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Đơn hàng đã hủy</button>
     </li>
 
     <li class="nav-item" role="presentation">
@@ -23,47 +28,92 @@
     <div class="tab-pane fade show active " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
         <div class="container d-flex flex-column flex-md-row align-items-center gap-2">
 
-            @foreach (var item in ViewBag.DonHangList)
+            @if (ViewBag.DonHangList != null)
             {
-                <div class="card  flex-md-row  align-items-center" style="width: fit-content">
-                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                        <img src="https://th.bing.com/th/id/OIP.rG8fM9GW4btcOiC4N9wv1AHaH6?pid=ImgDet&rs=1" class="img-thumbnail" width="150" />
-                        <a href="#!">
-                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Đơn hàng đặt lúc <span class="text-muted">@item.NgayDat</span></h5>
 
-                        <a href="@Url.Action("Invoices", "User",new {maDH = item.MaDonHang, tenKH = item.KhachHang.TenKhachHang})" class="btn btn-primary">Xem hóa đơn</a>
+                foreach (var item in ViewBag.DonHangList)
+                {
+                    <div class="card  flex-md-row  align-items-center" style="width: fit-content">
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                            <img src="https://th.bing.com/th/id/OIP.rG8fM9GW4btcOiC4N9wv1AHaH6?pid=ImgDet&rs=1" class="img-thumbnail" width="150" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Đơn hàng đặt lúc <span class="text-muted">@item.NgayDat</span></h5>
 
-                        <a data-bs-toggle="modal" data-bs-target="#confirmPopup_@item.MaDonHang" class="btn btn-danger">
-                            Hủy đơn hàng
-                        </a>
+                            <a href="@Url.Action("Invoices", "User", new { maDH = item.MaDonHang, tenKH = item.KhachHang.TenKhachHang })" class="btn btn-primary">Xem hóa đơn</a>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="confirmPopup_@item.MaDonHang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered ">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn hủy đơn hàng này?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
+                            <a data-bs-toggle="modal" data-bs-target="#confirmPopup_@item.MaDonHang" class="btn btn-danger">
+                                Hủy đơn hàng
+                            </a>
 
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-                                        <a href="@Url.Action("RemoveOrder", "User",new { maDH = item.MaDonHang, tenKH = item.KhachHang.TenKhachHang})" class="btn btn-danger">Hủy đơn hàng</a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="confirmPopup_@item.MaDonHang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered ">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn hủy đơn hàng này?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                                            <a href="@Url.Action("RemoveOrder", "User", new { maDH = item.MaDonHang, tenKH = item.KhachHang.TenKhachHang })" class="btn btn-danger">Hủy đơn hàng</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+
+
+
+
+            }
+            else
+            {
+                <p>Bạn chưa mua món hàng nào!.</p>
             }
         </div>
     </div>
 
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
+        @if (ViewBag.DonHangDaHuy != null)
+        {
+            foreach (var item in ViewBag.DonHangDaHuy)
+            {
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <ul class="p-0 my-2">
+                            @foreach (var tenSanPham in item.TenSanPham)
+                            {
+                                <li style="list-style: none" class="fw-bold main-blue-color mb-2">@tenSanPham</li>
+                            }
+                        </ul>
+                 
+                        <div class="d-flex align-items-center justify-content-between my-2">
+                            <p>Ngày hủy : <span class="text-muted">@item.NgayHuy</span> </p>
+                            <span class="badge bg-danger rounded-pill">Đã hủy</span>
+                        </div>
+
+
+
+                    </li>
+
+                </ul>
+            }
+        }
+        else
+        {
+            <p>Bạn chưa hủy đơn nào.</p>
+        }
+
+
+    </div>
 
 
 

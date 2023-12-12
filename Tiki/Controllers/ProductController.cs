@@ -11,6 +11,8 @@ namespace Tiki.Controllers
     {
         private readonly TikiEntities db = DatabaseSingleton.Instance;
 
+
+
         // GET: Detail
         public ActionResult Detail(string tenSP)
         {
@@ -70,6 +72,7 @@ namespace Tiki.Controllers
             return RedirectToAction("Detail", new { tenSP = TenSanPham });
 
         }
+
 
     }
 }

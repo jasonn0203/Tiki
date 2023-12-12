@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "Chart";
+    Layout = "~/Views/Shared/_SellerLayout.cshtml";
+}
+
+<div class="page-container">
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+
+                @* TAB *@
+                <ul class="nav nav-pills nav-justified mb-3" style="border-style: solid; border-radius: 12px; border-width: 1px; border-color: rgb(128, 128, 128,0.4);" id="pills-tab" role="tablist">
+
+                    <li class="nav-item border-end" role="presentation">
+                        <button class="nav-link active" id="pills-line-chart" data-bs-toggle="pill" data-bs-target="#pills-line" type="button" role="tab" aria-controls="line-chart" aria-selected="false">Biểu đồ doanh thu theo ngày</button>
+                    </li>
+
+
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-pie-chart" data-bs-toggle="pill" data-bs-target="#pills-pie" type="button" role="tab" aria-controls="pie-chart" aria-selected="false">Biểu đồ số lượng bán theo sản phẩm</button>
+                    </li>
+
+
+                </ul>
+
+
+                <div class="tab-content" style="margin-bottom: 430px;" id="pills-tabContent">
+
+                    <div class="tab-pane fade show active " id="pills-line" role="tabpanel" aria-labelledby="line-chart">
+                        <div class="container">
+                            <h2 class="main-blue-color my-4">Tổng doanh thu : @string.Format("{0:N0}", ViewBag.TongDoanhThu) đ</h2>
+                            <div>
+                                <canvas id="line-chart"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="tab-pane fade show " id="pills-pie" role="tabpanel" aria-labelledby="pie-chart">
+                        <div class="container d-flex align-items-center justify-content-center">
+                            <div  class="mx-auto" style="margin-top: 60px;">
+                                <canvas width="500" height="500" id="pie-chart"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+<script>
+    // Lấy dữ liệu từ ViewBag
+    var chartData = @Html.Raw(Json.Encode(ViewBag.ChartData));
+
+
+    var ctx = document.getElementById('line-chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: chartData.map(data => data.Date),
+            datasets: [{
+                label: 'Doanh thu theo ngày',
+                data: chartData.map(data => data.Revenue),
+                backgroundColor: '#0a68ff',
+                borderColor: '#0a68ff',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            animations: {
+                tension: {
+                    duration: 1000,
+                    easing: 'linear',
+                    from: 1,
+                    to: 0,
+                    loop: true
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
+    //Pie chart
+     var pieChartData = @Html.Raw(Json.Encode(ViewBag.ProductQuantityData));
+
+    var piectx = document.getElementById('pie-chart').getContext('2d');
+    var myPieChart = new Chart(piectx, {
+        type: 'pie',
+        data: {
+            labels: pieChartData.map(item => item.TenSP),
+            datasets: [{
+                data: pieChartData.map(item => item.SoLuong),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(245, 40, 145, 0.7)',
+                    'rgba(33, 107, 145, 0.7)',
+                    'rgba(43, 121, 247, 0.7)'
+
+                ],
+            }],
+        },
+        options: {
+            responsive: false, // Set to true for automatic resizing
+            maintainAspectRatio: false, // Set to true to maintain aspect ratio
+        }
+    });
+
+
+
+</script>

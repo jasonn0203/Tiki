@@ -33,5 +33,7 @@ namespace Tiki.Models
         public virtual DbSet<NhaCungCap> NhaCungCaps { get; set; }
         public virtual DbSet<PhanLoaiSP> PhanLoaiSPs { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
+
+
     }
 }

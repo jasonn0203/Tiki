@@ -27,6 +27,7 @@ namespace Tiki.Controllers
             }
             ViewBag.IsLoading = true;
 
+
             var maNCC = GetMaNCC();
 
             //Số sp đăng bán
@@ -287,7 +288,7 @@ namespace Tiki.Controllers
         // GET: 
         public ActionResult EditProduct(int? maSP)
         {
-            if (SellerAuthenSingleton.Instance == null)
+            if (Session["NhaCungCap"] == null)
             {
                 return RedirectToAction("SellerSignIn", "Seller");
             }
@@ -321,11 +322,20 @@ namespace Tiki.Controllers
 
             if (ModelState.IsValid)
             {
-                // Lưu thông tin sản phẩm đã chỉnh sửa vào cơ sở dữ liệu
+                var existingEntry = db.ChangeTracker.Entries<SanPham>().FirstOrDefault(e => e.Entity.MaSP == sanPham.MaSP);
+
+                if (existingEntry != null)
+                {
+                    existingEntry.State = EntityState.Detached;
+                }
+
+                db.SanPhams.Attach(sanPham);
                 db.Entry(sanPham).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("ProductList");
             }
+
 
 
             ViewBag.PhanLoaiList = new SelectList(db.PhanLoaiSPs, "MaPhanLoai", "TenPhanLoai");
@@ -361,6 +371,74 @@ namespace Tiki.Controllers
         }
 
 
+        /*Chart*/
+        public ActionResult Chart()
+        {
+            if (SellerAuthenSingleton.Instance == null)
+            {
+                return RedirectToAction("SellerSignIn", "Seller");
+            }
+
+            // Lấy mã chủ nhà từ session
+            var maNCC = GetMaNCC();
+
+
+
+            //Linechart
+            var revenueData = GetRevenueDataForChart(maNCC);
+
+            var chartData = revenueData.Select(d => new { Date = d.NgayDat.ToString("yyyy-MM-dd"), Revenue = d.TongDoanhThu });
+            ViewBag.ChartData = chartData;
+
+            //PieChart
+            var pieChartData = GetQuantityByProductPieChart(maNCC);
+
+            ViewBag.ProductQuantityData = pieChartData;
+
+            ViewBag.TongDoanhThu = TinhTongDoanhThu(maNCC);
+            ViewBag.Tab = "Chart";
+            return View();
+        }
+
+        private List<LineChartModel> GetRevenueDataForChart(int maNCC)
+        {
+            // Áp dụng where trước khi tính tổng doanh thu lọc các ngày k có doanh thu
+            var revenueData = db.ChiTietDonHangs
+                .Where(ct => ct.SanPham.MaNCC == maNCC && ct.DonDatHang.NgayDat.HasValue)
+                .GroupBy(ct => DbFunctions.TruncateTime(ct.DonDatHang.NgayDat))
+                .Select(g => new LineChartModel
+                {
+                    NgayDat = (DateTime)g.Key,
+                    TongDoanhThu = (decimal)g.Sum(ct => ct.DonGia * ct.SoLuong)
+                })
+                .OrderBy(data => data.NgayDat)
+                .ToList();
+
+            return revenueData;
+        }
+
+
+        private List<PieChartModel> GetQuantityByProductPieChart(int maNCC)
+        {
+            var productQuantityData = db.ChiTietDonHangs
+                 .Where(ct => ct.SanPham.MaNCC == maNCC && ct.DonDatHang.NgayDat.HasValue)
+                 .GroupBy(ct => ct.SanPham.TenSanPham)
+                 .Select(g => new PieChartModel
+                 {
+                     TenSP = g.Key,
+                     SoLuong = (int)g.Sum(ct => ct.SoLuong)
+                 })
+                 .ToList();
+
+
+            return productQuantityData;
+        }
+
+
+
     }
 
+
+
 }
+

@@ -2,7 +2,7 @@
 
 namespace Tiki.Models
 {
-    public class UserAuthenSingleton
+    public sealed class UserAuthenSingleton
     {
         private static KhachHang instance;
 

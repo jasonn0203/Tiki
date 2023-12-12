@@ -153,7 +153,7 @@ namespace Tiki.Controllers
             {
                 sanpham.SoLuong = short.Parse(form["soLuong"].ToString());
             }
-            //Delay 0.75s
+            //Delay 0.25s
             Thread.Sleep(250);
             return RedirectToAction("Checkout", new { maKH = GetMaKH() });
 
@@ -195,7 +195,7 @@ namespace Tiki.Controllers
                 db.ChiTietDonHangs.Add(chiTietDonHang);
             }
 
-            kh.DaThanhToan = true;
+            //kh.DaThanhToan = true;
             db.SaveChanges();
 
 
@@ -212,7 +212,7 @@ namespace Tiki.Controllers
         {
             KhachHang kh = UserAuthenSingleton.Instance;
 
-            if (kh != null && kh.DaThanhToan)
+            if (kh != null)
             {
                 // Nếu khách hàng đã thanh toán, cho phép truy cập trang
                 return View();

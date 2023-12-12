@@ -51,6 +51,12 @@
                             </a>
                         </li>
 
+                        <li class="@(ViewBag.Tab == "Chart" ? "active" : "")">
+                            <a class="text-decoration-none" href="@Url.Action("Chart","Seller")">
+                                <i class="fas fa-chart-simple  @(ViewBag.Tab == "Chart" ? "fa-spin" : "")"></i>Biểu đồ thống kê
+                            </a>
+                        </li>
+
 
                     </ul>
                 </nav>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Tiki.Models;
 using Tiki.Models.Singleton;
@@ -154,6 +153,20 @@ namespace Tiki.Controllers
             if (orderToRemove != null)
             {
                 // Hủy đơn đặt hàng
+                orderToRemove.IsCanceled = true;
+                orderToRemove.TenSanPham = orderToRemove.ChiTietDonHangs.Select(ct => ct.SanPham.TenSanPham).ToList();
+                orderToRemove.NgayHuy = DateTime.Now;
+
+                // Lấy danh sách đơn hàng đã hủy từ Session
+                List<DonDatHang> canceledOrders = Session["CanceledOrders"] as List<DonDatHang> ?? new List<DonDatHang>();
+
+                // Thêm đơn hàng đã hủy vào danh sách
+                canceledOrders.Add(orderToRemove);
+
+                // Cập nhật Session
+                Session["CanceledOrders"] = canceledOrders;
+
+
                 db.DonDatHangs.Remove(orderToRemove);
                 db.SaveChanges();
 
@@ -178,8 +191,17 @@ namespace Tiki.Controllers
                 .Where(dh => dh.KhachHang.TenKhachHang == tenKH)
                 .ToList();
 
+
             ViewBag.DonHangList = donHangList;
+
             var khInfo = db.KhachHangs.FirstOrDefault(c => c.TenKhachHang == tenKH);
+
+            // Lọc ra các đơn hàng đã hủy từ Session
+            List<DonDatHang> canceledOrders = Session["CanceledOrders"] as List<DonDatHang> ?? new List<DonDatHang>();
+
+            // Lưu danh sách đơn hàng đã hủy vào ViewBag
+            ViewBag.DonHangDaHuy = canceledOrders;
+
             return View(khInfo);
         }
 

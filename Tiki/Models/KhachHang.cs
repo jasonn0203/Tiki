@@ -11,7 +11,7 @@ namespace Tiki.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class KhachHang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +20,7 @@ namespace Tiki.Models
             this.BinhLuans = new HashSet<BinhLuan>();
             this.DonDatHangs = new HashSet<DonDatHang>();
         }
-
+    
         public int MaKH { get; set; }
         public string TenKhachHang { get; set; }
         public string DiaChi { get; set; }
@@ -30,16 +30,10 @@ namespace Tiki.Models
         public string SoThe { get; set; }
         public Nullable<System.DateTime> NgayHH { get; set; }
         public Nullable<short> CVV { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BinhLuan> BinhLuans { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonDatHang> DonDatHangs { get; set; }
-
-
-
-
-
-        public bool DaThanhToan { get; set; }
     }
 }

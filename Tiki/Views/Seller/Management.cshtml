@@ -34,22 +34,26 @@
                                                 <th>Ngày bán</th>
                                                 <th>ID đơn hàng</th>
                                                 <th>Tên sản phẩm</th>
+                                                <th class="text-right">Trạng thái</th>
                                                 <th class="text-right">Giá</th>
                                                 <th class="text-right">Số lượng</th>
                                                 <th class="text-right">Tổng cộng</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                                <tr>
-                                                    <td>@item.NgayBan.ToString("dd/MM/yyyy")</td>
-                                                    <td>@item.IDDonHang</td>
-                                                    <td>@item.TenSanPham</td>
-                                                    <td class="text-right">@item.Gia.ToString("C0")</td>
-                                                    <td class="text-right">@item.SoLuong</td>
-                                                    <td class="text-right">@item.TongCong.ToString("C0")</td>
-                                                </tr>
+                                            <tr>
+                                                <td>@item.NgayBan.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.IDDonHang</td>
+                                                <td>@item.TenSanPham</td>
+                                                <td class="text-right fw-bold">Đã duyệt</td>
+                                                <td class="text-right">@item.Gia.ToString("C0")</td>
+                                                <td class="text-right">@item.SoLuong</td>
+                                                <td class="text-right">@item.TongCong.ToString("C0")</td>
+
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>

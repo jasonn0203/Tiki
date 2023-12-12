@@ -2,7 +2,7 @@
 
 namespace Tiki.Models
 {
-    public class SellerAuthenSingleton
+    public sealed class SellerAuthenSingleton
     {
         private static NhaCungCap instance;
 

@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9775c4d49e944b578cbe45ab2e699139" Name="Diagram1" ZoomLevel="86">
+      <Diagram DiagramId="9775c4d49e944b578cbe45ab2e699139" Name="Diagram1" ZoomLevel="54">
         <EntityTypeShape EntityType="TikiModel.BinhLuan" Width="1.5" PointX="7.5" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="TikiModel.ChiTietDonHang" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TikiModel.DonDatHang" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TikiModel.KhachHang" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TikiModel.DonDatHang" Width="1.5" PointX="5.375" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="TikiModel.KhachHang" Width="1.5" PointX="2.625" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TikiModel.KhuyenMai" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TikiModel.NhaCungCap" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TikiModel.PhanLoaiSP" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
